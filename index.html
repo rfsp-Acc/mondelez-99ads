@@ -140,8 +140,8 @@ button{font-family:inherit;color:inherit}
 .cover .shape .main{fill:var(--yellow)}
 .cover .girl{position:absolute;right:calc(var(--u)*133);bottom:0;width:calc(var(--u)*1112);height:calc(var(--u)*1042);object-fit:contain;object-position:right bottom}
 .cover .logo{position:absolute;left:calc(var(--u)*149);top:calc(var(--u)*161);width:calc(var(--u)*168);height:calc(var(--u)*168)}
-.cover .titles{position:absolute;left:calc(var(--u)*352);top:calc(var(--u)*158)}
-.cover h1{font-size:max(26px,calc(var(--u)*127));font-weight:800;letter-spacing:-.04em;line-height:1;color:var(--ink);white-space:nowrap}
+.cover .titles{position:absolute;left:calc(var(--u)*352);top:calc(var(--u)*172)}
+.cover h1{font-size:max(22px,calc(var(--u)*103));font-weight:800;letter-spacing:-.04em;line-height:1;color:var(--ink);white-space:nowrap}
 .cover .sub{font-size:max(13px,calc(var(--u)*48));font-weight:400;letter-spacing:-.02em;line-height:1.15;margin-top:calc(var(--u)*2);color:var(--ink);white-space:nowrap}
 .cover .brand{position:absolute;left:calc(var(--u)*149);top:calc(var(--u)*780);width:calc(var(--u)*674);height:calc(var(--u)*167)}
 
@@ -175,8 +175,50 @@ button{font-family:inherit;color:inherit}
 .nav button:focus-visible,.case-row:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
 .progress{position:fixed;left:0;top:0;height:3px;background:var(--yellow-deep);z-index:5;transition:width .5s cubic-bezier(.2,.7,.2,1)}
 
+/* ---------- cases (modelo Personas do Figma) ---------- */
+.slide.case.active{display:block}
+.case .c-left{position:absolute;left:calc(var(--u)*156);top:calc(var(--u)*100);width:calc(var(--u)*410)}
+.c-name{display:flex;gap:calc(var(--u)*10);align-items:flex-start;margin-top:calc(var(--u)*10)}
+.c-name .ic{--ic:max(22px,calc(var(--u)*46));margin-top:calc(var(--u)*4);stroke-width:1.4;color:var(--title)}
+.c-name h2{font-size:max(20px,calc(var(--u)*54));font-weight:500;color:var(--title);line-height:1.02;letter-spacing:-.02em}
+.c-sub{font-size:max(13px,calc(var(--u)*36));font-weight:400;color:var(--title);line-height:1.12;margin-top:calc(var(--u)*16);letter-spacing:-.01em}
+.c-par{font-size:var(--fs-lede);line-height:1.45;color:var(--body);margin-top:calc(var(--u)*24)}
+.c-kpis{position:absolute;right:calc(var(--u)*156);top:calc(var(--u)*100);width:calc(var(--u)*993);display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:calc(var(--u)*31)}
+.c-kpis .kpi-wrap{gap:calc(var(--u)*16)}
+.c-mid{position:absolute;right:calc(var(--u)*156);top:0;bottom:0;width:calc(var(--u)*991);display:flex;align-items:center;pointer-events:none}
+.c-card{width:100%;pointer-events:auto;background:var(--yellow);border-radius:calc(var(--u)*24);padding:calc(var(--u)*32)}
+.c-card h3{font-size:var(--fs-head);font-weight:700;letter-spacing:-.01em;line-height:1.2}
+.c-items{display:flex;justify-content:space-between;gap:calc(var(--u)*24);margin-top:calc(var(--u)*40)}
+.pi{display:flex;align-items:center;gap:calc(var(--u)*12);min-width:0}
+.pi .ic{--ic:max(22px,calc(var(--u)*48));stroke-width:1.3}
+.pi b{display:block;font-size:calc(var(--fs-head)*.8);font-weight:700;line-height:1.1}
+.pi span{display:block;font-size:calc(var(--fs-head)*.8);font-weight:400;line-height:1.1;margin-top:calc(var(--u)*2)}
+.shot{position:absolute;left:0;bottom:0;width:calc(var(--u)*945);height:calc(var(--u)*580)}
+.shot>svg{position:absolute;inset:0;width:100%;height:100%;fill:var(--ph)}
+.shot.photo{left:calc(var(--u)*156);bottom:calc(var(--u)*70);width:auto;height:calc(var(--u)*500)}
+.photos{position:relative;display:flex;gap:calc(var(--u)*24);height:100%;align-items:flex-end}
+.photos::before{content:'';position:absolute;right:calc(var(--u)*-34);bottom:calc(var(--u)*-26);width:58%;height:80%;background:var(--yellow);border-radius:calc(var(--u)*30);z-index:0}
+.photos .pic{position:relative;z-index:1;flex:none;display:block;height:calc(var(--u)*460);aspect-ratio:334/610;object-fit:cover;border-radius:calc(var(--u)*22);box-shadow:0 calc(var(--u)*28) calc(var(--u)*50) calc(var(--u)*-22) rgba(0,0,0,.45)}
+.photos .pic+.pic{margin-bottom:calc(var(--u)*40)}
+.photos .ph-frame{display:flex}
+.ph-frame{background:var(--ph);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:calc(var(--u)*10);color:var(--muted)}
+.ph-frame .ic{--ic:max(22px,calc(var(--u)*52));stroke-width:1.3}
+.ph-frame span{font-size:var(--fs-small);font-weight:500;letter-spacing:.02em}
+.shot.cut{left:calc(var(--u)*96);bottom:0;width:calc(var(--u)*570);height:calc(var(--u)*580);background:none}
+.shot.cut::before{content:'';position:absolute;left:34%;right:-8%;bottom:7%;height:50%;background:var(--yellow);border-radius:calc(var(--u)*30);z-index:0}
+.shot.cut img{position:relative;z-index:1;display:block;width:100%;height:100%;object-fit:contain;object-position:left bottom;filter:drop-shadow(0 calc(var(--u)*18) calc(var(--u)*26) rgba(0,0,0,.28))}
+.shot .lbl{position:absolute;left:12%;top:38%;width:50%;display:flex;flex-direction:column;align-items:center;gap:calc(var(--u)*10);color:var(--muted)}
+.shot .lbl .ic{--ic:max(22px,calc(var(--u)*56));stroke-width:1.3}
+.shot .lbl span{font-size:var(--fs-small);font-weight:500;letter-spacing:.02em}
+.c-cols{position:absolute;right:calc(var(--u)*156);bottom:calc(var(--u)*112);width:calc(var(--u)*788);display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:calc(var(--u)*32)}
+.ccol{display:flex;gap:calc(var(--u)*12);align-items:flex-start;min-width:0}
+.ccol .ic{--ic:max(20px,calc(var(--u)*46));stroke-width:1.2}
+.ccol b{display:block;font-size:var(--fs-cap);font-weight:700;line-height:1.25}
+.ccol p{font-size:var(--fs-cap);line-height:1.3;margin-top:calc(var(--u)*8);color:var(--ink)}
+
 /* ---------- resumo placeholder ---------- */
 .sum-ph{min-height:calc(var(--u)*300)}
+.sum-head{max-width:calc(var(--u)*410)}
 
 /* ---------- retrato (celular e tablet em pe) ---------- */
 @media (max-aspect-ratio:23/20){
@@ -219,11 +261,37 @@ button{font-family:inherit;color:inherit}
   /* capa em retrato */
   .cover .logo{left:var(--pad-x);top:calc(var(--u)*34);width:calc(var(--u)*64);height:calc(var(--u)*64)}
   .cover .titles{left:calc(var(--pad-x) + var(--u)*78);top:calc(var(--u)*32)}
-  .cover h1{font-size:max(24px,calc(var(--u)*40))}
+  .cover h1{font-size:max(20px,calc(var(--u)*34))}
   .cover .sub{font-size:max(12px,calc(var(--u)*16))}
   .cover .brand{left:var(--pad-x);top:calc(var(--u)*150);width:calc(var(--u)*270);height:calc(var(--u)*67)}
   .cover .shape{width:calc(var(--u)*480);height:calc(var(--u)*470)}
   .cover .girl{right:calc(var(--u)*8);top:auto;bottom:0;width:calc(var(--u)*400);height:calc(var(--u)*375)}
+  /* cases em retrato */
+  .slide.case.active{display:flex;flex-direction:column;gap:calc(var(--u)*14)}
+  .case .c-left,.c-kpis,.c-mid{position:static;width:auto;right:auto;left:auto;top:auto}
+  .case .c-mid{display:block}
+  .c-name h2{font-size:max(20px,calc(var(--u)*30))}
+  .c-name .ic{--ic:max(18px,calc(var(--u)*26));margin-top:calc(var(--u)*2)}
+  .c-sub{font-size:max(13px,calc(var(--u)*19));margin-top:calc(var(--u)*8)}
+  .c-kpis{gap:calc(var(--u)*10)}
+  .c-kpis .kpi-wrap{gap:0}
+  .c-card{padding:calc(var(--u)*16)}
+  .c-items{margin-top:calc(var(--u)*12);gap:calc(var(--u)*10);flex-direction:column}
+  .pi .ic{--ic:max(18px,calc(var(--u)*26))}
+  .pi b,.pi span{font-size:var(--fs-cap)}
+  .shot{position:relative;left:auto;bottom:auto;width:auto;flex:1;min-height:calc(var(--u)*90);height:auto;order:5;background:var(--ph);border-radius:calc(var(--u)*18)}
+  .shot>svg{display:none}
+  .shot.photo{width:auto;height:auto}
+  .photos{position:absolute;inset:0;gap:calc(var(--u)*6);border-radius:calc(var(--u)*18);overflow:hidden;align-items:stretch}
+  .photos img{flex:1;min-width:0;width:auto;aspect-ratio:auto;object-fit:contain;border-radius:0}
+  .shot .lbl{left:0;right:0;width:auto;top:50%;transform:translateY(-50%)}
+  .shot.photo{position:relative;left:auto;bottom:auto;width:auto;height:auto;flex:1;min-height:calc(var(--u)*110);order:5;background:none;border-radius:0}
+  .photos{position:relative;inset:auto;height:100%;gap:calc(var(--u)*10);align-items:center;justify-content:space-between;overflow:visible;border-radius:0}
+  .photos::before{display:none}
+  .photos .pic{flex:none;min-width:0;width:calc(50% - var(--u)*5);height:auto;max-height:100%;aspect-ratio:334/610;margin:0!important;object-fit:cover;border-radius:calc(var(--u)*14);box-shadow:none}
+  .shot.cut{position:relative;left:auto;bottom:auto;width:auto;height:auto;flex:1;min-height:calc(var(--u)*110);order:5}
+  .shot.cut::before{left:18%;right:18%;bottom:4%;height:55%}
+  .shot.cut img{object-position:center bottom}
   .wm{font-size:20px}
 }
 /* paisagem baixa (celular deitado): so o essencial */
@@ -244,6 +312,7 @@ button{font-family:inherit;color:inherit}
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
+    <clipPath id="shotclip" clipPathUnits="objectBoundingBox"><path d="M0 0.233 L0.693 0.1 Q0.764 0.086 0.77 0.172 L1 1 L0 1 Z"/></clipPath>
     <symbol id="i-image" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2.5"/><circle cx="9" cy="10" r="1.8"/><path d="M21 16l-5-5-8 8"/></symbol>
     <symbol id="i-click" viewBox="0 0 24 24"><path d="M9 9l5.5 12 1.9-5.2L21.5 14z"/><path d="M5.2 5.2l1.6 1.6M3 11h2.2M11 3v2.2M16.8 5.2l-1.6 1.6M5.2 16.8l1.6-1.6"/></symbol>
     <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></symbol>
@@ -262,6 +331,9 @@ button{font-family:inherit;color:inherit}
     <symbol id="i-layers" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="7" rx="1.5"/><rect x="3" y="13" width="8" height="8" rx="1.5"/><rect x="14" y="13" width="7" height="8" rx="1.5"/></symbol>
     <symbol id="i-sparkle" viewBox="0 0 24 24"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M19 17l.7 1.8L21.5 19.5l-1.8.7L19 22l-.7-1.8L16.5 19.5l1.8-.7z"/></symbol>
     <symbol id="i-phone" viewBox="0 0 24 24"><rect x="7" y="2.5" width="10" height="19" rx="2.2"/><path d="M11 18.5h2"/></symbol>
+    <symbol id="i-choco" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2.2"/><path d="M5 9h14M5 15.5h14M12 2.5v19"/></symbol>
+    <symbol id="i-bucket" viewBox="0 0 24 24"><path d="M5 9h14l-1.6 12H6.6z"/><path d="M7.5 9c0-3.2 1.9-5.5 4.5-5.5s4.5 2.3 4.5 5.5"/><path d="M9.5 12.5v5M12 12.5v5M14.5 12.5v5"/></symbol>
+    <symbol id="i-cone" viewBox="0 0 24 24"><path d="M6.5 11.5a5.5 5.5 0 0111 0"/><path d="M5.5 11.5h13L12 22z"/><path d="M9.5 14.5l2.5 4.5M14.5 14.5L12 19"/></symbol>
   </defs>
 </svg>
 
@@ -287,128 +359,120 @@ button{font-family:inherit;color:inherit}
 <!-- 2. RESUMO -->
 <section class="slide content" data-name="resumo" aria-label="Resumo">
   <div class="left">
-    <div class="head">
+    <div class="head sum-head">
       <p class="eyebrow a" style="--i:0">Resumo</p>
-      <h2 class="title a" style="--i:1">Alimentos na 99 em 2026</h2>
-      <p class="lede a hide-s" style="--i:2">Resultado médio das campanhas de Alimentos por formato e três cases que mostram como atenção, interação e pedidos andam juntos dentro do app.</p>
+      <div class="c-name a" style="--i:1"><h2>Alimentos 2026</h2></div>
+      <p class="c-sub a" style="--i:2">Atenção que vira clique, clique que vira pedido</p>
+      <p class="c-par a hide-p hide-s" style="--i:3">A 99 coloca a sua marca na tela de quem está em movimento: vídeo para gerar atenção, Pop Up para gerar interação e presença nas ruas.</p>
+      <p class="c-par a hide-p hide-s" style="--i:4;margin-top:calc(var(--u)*20)">Os três cases abaixo mostram o resultado em escala, em retorno de vendas e em pedidos no app.</p>
     </div>
     <div class="left-cards">
-      <div class="ph a-pop hide-s hide-p sum-ph" style="--i:4"><svg class="ic"><use href="#i-image"/></svg><span>Imagem</span></div>
+      <div class="ph a-pop hide-s hide-p sum-ph" style="--i:5"><svg class="ic"><use href="#i-image"/></svg><span>Imagem</span></div>
     </div>
   </div>
   <div class="right">
-    <h3 class="h-sec a" style="--i:1">CTR médio por formato:</h3>
+    <h3 class="h-sec a" style="--i:1">CTR médio por formato em Alimentos, 2026:</h3>
     <div class="kpis">
       <div class="kpi-wrap a" style="--i:2">
         <div class="kpi"><span class="k">In Trip (vídeo)</span><span class="v"><span class="cnt" data-v="3.0" data-d="1" data-dec="," data-suf="%">3,0%</span></span><div class="meter"><i style="width:37%;--i:2"></i></div></div>
-        <div class="cap hide-s"><svg class="ic"><use href="#i-route"/></svg><div><b>Vídeo na viagem</b><span>Durante a corrida</span></div></div>
+        <div class="cap hide-s"><svg class="ic"><use href="#i-route"/></svg><div><b>Vídeo na viagem</b><span>Tela cativa durante a corrida</span></div></div>
       </div>
       <div class="kpi-wrap a" style="--i:3">
         <div class="kpi"><span class="k">Waiting for (vídeo)</span><span class="v"><span class="cnt" data-v="3.4" data-d="1" data-dec="," data-suf="%">3,4%</span></span><div class="meter"><i style="width:42%;--i:3"></i></div></div>
-        <div class="cap hide-s"><svg class="ic"><use href="#i-play"/></svg><div><b>Vídeo na espera</b><span>Antes da corrida</span></div></div>
+        <div class="cap hide-s"><svg class="ic"><use href="#i-play"/></svg><div><b>Vídeo na espera</b><span>Atenção antes da corrida</span></div></div>
       </div>
       <div class="kpi-wrap a" style="--i:4">
         <div class="kpi y"><span class="k">Pop Up</span><span class="v"><span class="cnt" data-v="8.1" data-d="1" data-dec="," data-suf="%">8,1%</span></span><div class="meter"><i style="width:100%;--i:4"></i></div></div>
-        <div class="cap hide-s"><svg class="ic"><use href="#i-click"/></svg><div><b>Maior interação</b><span>Melhor CTR do mix</span></div></div>
+        <div class="cap hide-s"><svg class="ic"><use href="#i-click"/></svg><div><b>Até 2,7x o CTR dos vídeos</b><span>O formato que mais gera interação</span></div></div>
       </div>
     </div>
-    <h3 class="h-sec a" style="--i:5">Cases em destaque:</h3>
+    <h3 class="h-sec a" style="--i:5">Resultados em destaque:</h3>
     <div class="cases">
-      <button class="case-row a" style="--i:6" data-go="case-1"><svg class="ic"><use href="#i-car"/></svg><span class="t"><b>Case 1 · Marca de Chocolates</b><span class="hide-s">Vídeo, Pop Up e carros adesivados</span></span><span class="m"><span class="cnt" data-v="36" data-d="0" data-suf="M">36M</span><small>impactos</small></span></button>
-      <button class="case-row a" style="--i:7" data-go="case-2"><svg class="ic"><use href="#i-bag"/></svg><span class="t"><b>Case 2 · KFC</b><span class="hide-s">Terça Balde no 99Food</span></span><span class="m"><span class="cnt" data-v="5" data-d="0" data-suf="x">5x</span><small>ROAS 14d</small></span></button>
-      <button class="case-row a" style="--i:8" data-go="case-3"><svg class="ic"><use href="#i-cart"/></svg><span class="t"><b>Case 3 · Marca de Sorvetes</b><span class="hide-s">Pedidos B2B no app</span></span><span class="m"><span class="cnt" data-v="338" data-d="0" data-pre="+" data-suf="%">+338%</span><small>pedidos</small></span></button>
+      <button class="case-row a" style="--i:6" data-go="case-1"><svg class="ic"><use href="#i-choco"/></svg><span class="t"><b>Case 1 · Marca de Chocolates</b><span class="hide-s">Vídeo, Pop Up e 26 carros adesivados: CTR total de 3,85% e VTR de 46%</span></span><span class="m"><span class="cnt" data-v="36" data-d="0" data-suf="M">36M</span><small>impactos</small></span></button>
+      <button class="case-row a" style="--i:7" data-go="case-2"><svg class="ic"><use href="#i-bucket"/></svg><span class="t"><b>Case 2 · KFC</b><span class="hide-s">Terça Balde no 99Food: ticket médio de R$ 71,51 e CPC de R$ 2,98</span></span><span class="m"><span class="cnt" data-v="5" data-d="0" data-suf="x">5x</span><small>ROAS 14d</small></span></button>
+      <button class="case-row a" style="--i:8" data-go="case-3"><svg class="ic"><use href="#i-cone"/></svg><span class="t"><b>Case 3 · Marca de Sorvetes</b><span class="hide-s">Pedidos B2B no app: +122% em acessos ao cardápio e Pop Up com 2,4% de CTR</span></span><span class="m"><span class="cnt" data-v="338" data-d="0" data-pre="+" data-suf="%">+338%</span><small>pedidos</small></span></button>
     </div>
   </div>
 </section>
 
-<!-- 3. CASE 1 -->
-<section class="slide content" data-name="case-1" aria-label="Case 1">
-  <div class="left">
-    <div class="head">
-      <p class="eyebrow a" style="--i:0">Case 1 · Marca de Chocolates</p>
-      <h2 class="title a" style="--i:1">Atenção, interação e a marca pela cidade</h2>
-      <p class="lede a hide-s" style="--i:2">Vídeos para gerar atenção, Pop Up para gerar interação e carros adesivados para levar a marca pela cidade.</p>
-    </div>
-    <div class="left-cards">
-      <div class="info a hide-p hide-s" style="--i:3"><svg class="ic"><use href="#i-layers"/></svg><div><b>Formatos</b><span>Vídeo · Pop Up · Carros adesivados</span></div></div>
-      <div class="pair">
-        <div class="mini a" style="--i:4"><div class="row"><svg class="ic"><use href="#i-car"/></svg><b>Carros adesivados</b></div><span class="n"><span class="cnt" data-v="26" data-d="0">26</span></span><span class="s">64.237 km rodados</span></div>
-        <div class="mini a" style="--i:5"><div class="row"><svg class="ic"><use href="#i-eye"/></svg><b>Impactos estimados</b></div><span class="n"><span class="cnt" data-v="2.31" data-d="2" data-dec="," data-suf=" mi">2,31 mi</span></span><span class="s">pelos carros</span></div>
-      </div>
-    </div>
+<!-- CASE 1 -->
+<section class="slide case" data-name="case-1" aria-label="Case 1">
+  <div class="c-left">
+    <p class="eyebrow a" style="--i:0">Case 1</p>
+    <div class="c-name a" style="--i:1"><svg class="ic"><use href="#i-choco"/></svg><h2>Marca de Chocolates</h2></div>
+    <p class="c-sub a" style="--i:2">Atenção, interação e a marca pela cidade</p>
+    <p class="c-par a hide-p hide-s" style="--i:3">Vídeos para gerar atenção, Pop Up para gerar interação e carros adesivados para levar a marca pela cidade.</p>
   </div>
-  <div class="right">
-    <div class="kpis">
-      <div class="kpi-wrap a" style="--i:1"><div class="kpi"><span class="k">CTR total</span><span class="v"><span class="cnt" data-v="3.85" data-d="2" data-dec="," data-suf="%">3,85%</span></span></div><div class="cap hide-s"><svg class="ic"><use href="#i-click"/></svg><div><b>Taxa de cliques</b><span>Em toda a campanha</span></div></div></div>
-      <div class="kpi-wrap a" style="--i:2"><div class="kpi"><span class="k">VTR</span><span class="v"><span class="cnt" data-v="46" data-d="0" data-suf="%">46%</span></span></div><div class="cap hide-s"><svg class="ic"><use href="#i-play"/></svg><div><b>Visualização do vídeo</b><span>Taxa de vídeo assistido</span></div></div></div>
-      <div class="kpi-wrap a" style="--i:3"><div class="kpi y"><span class="k">Impactos totais</span><span class="v"><span class="cnt" data-v="36" data-d="0" data-suf="M">36M</span></span></div><div class="cap hide-s"><svg class="ic"><use href="#i-eye"/></svg><div><b>27M impactos Car Icon</b><span>Dentro do total</span></div></div></div>
+  <div class="c-kpis">
+      <div class="kpi-wrap a" style="--i:1"><div class="kpi"><span class="k">CTR total</span><span class="v"><span class="cnt" data-v="3.85" data-d="2" data-dec="," data-suf="%">3,85%</span></span></div><div class="cap hide-s"><svg class="ic"><use href="#i-click"/></svg><div><b>Acima do vídeo médio</b><span>Médias de 3,4% e 3,0% em 2026</span></div></div></div>
+      <div class="kpi-wrap a" style="--i:2"><div class="kpi"><span class="k">VTR</span><span class="v"><span class="cnt" data-v="46" data-d="0" data-suf="%">46%</span></span></div><div class="cap hide-s"><svg class="ic"><use href="#i-play"/></svg><div><b>Vídeos assistidos</b><span>Taxa de visualização</span></div></div></div>
+      <div class="kpi-wrap a" style="--i:3"><div class="kpi y"><span class="k">Impactos totais</span><span class="v"><span class="cnt" data-v="36" data-d="0" data-suf="M">36M</span></span></div><div class="cap hide-s"><svg class="ic"><use href="#i-eye"/></svg><div><b>27M impactos Car Icon</b><span>Dentro dos 36M totais</span></div></div></div>
+  </div>
+  <div class="c-mid"><div class="c-card a" style="--i:5">
+    <h3>Carros adesivados</h3>
+    <div class="c-items">
+        <div class="pi"><svg class="ic"><use href="#i-car"/></svg><div><b>26 carros</b><span>64.237 km rodados</span></div></div>
+        <div class="pi"><svg class="ic"><use href="#i-eye"/></svg><div><b>2,31 mi de impactos</b><span>estimados nas ruas</span></div></div>
     </div>
-    <div class="trio">
-      <div class="col a" style="--i:4"><div class="ph"><svg class="ic"><use href="#i-image"/></svg><span>Imagem</span></div><i class="conn" style="--i:4"></i><div class="fmt"><div class="row"><svg class="ic"><use href="#i-play"/></svg><b>Vídeo</b></div><p class="hide-p hide-s">Gera atenção.</p></div></div>
-      <div class="col a" style="--i:5"><div class="ph"><svg class="ic"><use href="#i-image"/></svg><span>Imagem</span></div><i class="conn" style="--i:5"></i><div class="fmt"><div class="row"><svg class="ic"><use href="#i-click"/></svg><b>Pop Up</b></div><p class="hide-p hide-s">Gera interação.</p></div></div>
-      <div class="col a" style="--i:6"><div class="ph"><svg class="ic"><use href="#i-image"/></svg><span>Imagem</span></div><i class="conn" style="--i:6"></i><div class="fmt"><div class="row"><svg class="ic"><use href="#i-car"/></svg><b>Carros adesivados</b></div><p class="hide-p hide-s">Levam a marca pela cidade.</p></div></div>
-    </div>
+  </div></div>
+  <div class="shot photo a-pop" style="--i:4"><div class="photos"><img class="pic" src="assets/carros-adesivados.png" alt="Carro elétrico adesivado com anúncio de KitKat e Break, em vista traseira e lateral"><img class="pic" src="assets/propaganda-interna.png" alt="Cartaz de KitKat e Break pendurado no encosto do banco de um carro"></div></div>
+  <div class="c-cols hide-p hide-s">
+      <div class="ccol"><svg class="ic"><use href="#i-play"/></svg><div><b>Atenção com vídeo</b><p>Vídeos para gerar atenção. Com CTR total de 3,85% e VTR de 46%, a mensagem foi vista e gerou cliques.</p></div></div>
+      <div class="ccol"><svg class="ic"><use href="#i-click"/></svg><div><b>Interação com Pop Up</b><p>Pop Up para gerar interação. Em Alimentos, o formato tem CTR médio de 8,1% em 2026.</p></div></div>
   </div>
 </section>
 
-<!-- 4. CASE 2 -->
-<section class="slide content" data-name="case-2" aria-label="Case 2">
-  <div class="left">
-    <div class="head">
-      <p class="eyebrow a" style="--i:0">Case 2 · KFC</p>
-      <h2 class="title a" style="--i:1">Mais pedidos da Terça Balde no app da 99</h2>
-      <p class="lede a hide-s" style="--i:2">A KFC buscava aumentar os pedidos da promoção Terça Balde no aplicativo da 99. A mídia em vídeo na viagem direcionava o usuário para a landing page da KFC no 99Food.</p>
-    </div>
-    <div class="left-cards">
-      <div class="info a hide-p hide-s" style="--i:3"><svg class="ic"><use href="#i-bag"/></svg><div><b>Promoção</b><span>Terça Balde, no app da 99</span></div></div>
-      <div class="pair">
-        <div class="mini a" style="--i:4"><div class="row"><svg class="ic"><use href="#i-click"/></svg><b>CPC</b></div><span class="n"><span class="cnt" data-v="2.98" data-d="2" data-dec="," data-pre="R$ ">R$ 2,98</span></span><span class="s">custo por clique</span></div>
-        <div class="mini a" style="--i:5"><div class="row"><svg class="ic"><use href="#i-cash"/></svg><b>Ticket médio</b></div><span class="n"><span class="cnt" data-v="71.51" data-d="2" data-dec="," data-pre="R$ ">R$ 71,51</span></span><span class="s">por pedido</span></div>
-      </div>
-    </div>
+<!-- CASE 2 -->
+<section class="slide case" data-name="case-2" aria-label="Case 2">
+  <div class="c-left">
+    <p class="eyebrow a" style="--i:0">Case 2</p>
+    <div class="c-name a" style="--i:1"><svg class="ic"><use href="#i-bucket"/></svg><h2>KFC</h2></div>
+    <p class="c-sub a" style="--i:2">Terça Balde no app da 99</p>
+    <p class="c-par a hide-p hide-s" style="--i:3">A KFC buscava aumentar os pedidos da promoção Terça Balde no aplicativo da 99. A mídia em vídeo na viagem levava o usuário para a landing page da KFC no 99Food.</p>
   </div>
-  <div class="right">
-    <div class="kpis">
-      <div class="kpi-wrap a" style="--i:1"><div class="kpi"><span class="k">CTR</span><span class="v"><span class="cnt" data-v="2.6" data-d="1" data-dec="," data-suf="%">2,6%</span></span></div><div class="cap hide-s"><svg class="ic"><use href="#i-click"/></svg><div><b>Taxa de cliques</b><span>Do vídeo para a landing page</span></div></div></div>
-      <div class="kpi-wrap a" style="--i:2"><div class="kpi"><span class="k">VTR</span><span class="v"><span class="cnt" data-v="64" data-d="0" data-suf="%">64%</span></span></div><div class="cap hide-s"><svg class="ic"><use href="#i-play"/></svg><div><b>Visualização do vídeo</b><span>Taxa de vídeo assistido</span></div></div></div>
-      <div class="kpi-wrap a" style="--i:3"><div class="kpi y"><span class="k">ROAS 14d</span><span class="v"><span class="cnt" data-v="5" data-d="0" data-suf="x">5x</span></span></div><div class="cap hide-s"><svg class="ic"><use href="#i-trend"/></svg><div><b>Retorno em 14 dias</b><span>Sobre o investimento</span></div></div></div>
+  <div class="c-kpis">
+      <div class="kpi-wrap a" style="--i:1"><div class="kpi"><span class="k">CTR</span><span class="v"><span class="cnt" data-v="2.6" data-d="1" data-dec="," data-suf="%">2,6%</span></span></div><div class="cap hide-s"><svg class="ic"><use href="#i-click"/></svg><div><b>Cliques para o 99Food</b><span>Vídeo na viagem</span></div></div></div>
+      <div class="kpi-wrap a" style="--i:2"><div class="kpi"><span class="k">VTR</span><span class="v"><span class="cnt" data-v="64" data-d="0" data-suf="%">64%</span></span></div><div class="cap hide-s"><svg class="ic"><use href="#i-play"/></svg><div><b>Maioria assiste ao vídeo</b><span>Taxa de visualização</span></div></div></div>
+      <div class="kpi-wrap a" style="--i:3"><div class="kpi y"><span class="k">ROAS 14d</span><span class="v"><span class="cnt" data-v="5" data-d="0" data-suf="x">5x</span></span></div><div class="cap hide-s"><svg class="ic"><use href="#i-trend"/></svg><div><b>Retorno em 14 dias</b><span>ROAS sobre o investimento</span></div></div></div>
+  </div>
+  <div class="c-mid"><div class="c-card a" style="--i:5">
+    <h3>Eficiência da campanha</h3>
+    <div class="c-items">
+        <div class="pi"><svg class="ic"><use href="#i-click"/></svg><div><b>CPC de R$ 2,98</b><span>custo por clique</span></div></div>
+        <div class="pi"><svg class="ic"><use href="#i-cash"/></svg><div><b>Ticket médio de R$ 71,51</b><span>valor médio por pedido</span></div></div>
     </div>
-    <div class="trio">
-      <div class="col a" style="--i:4"><div class="ph"><svg class="ic"><use href="#i-image"/></svg><span>Imagem</span></div><i class="conn" style="--i:4"></i><div class="fmt"><div class="row"><svg class="ic"><use href="#i-route"/></svg><b>Vídeo na viagem</b></div><p class="hide-p hide-s">Mídia em vídeo durante a corrida.</p></div></div>
-      <div class="col a" style="--i:5"><div class="ph"><svg class="ic"><use href="#i-image"/></svg><span>Imagem</span></div><i class="conn" style="--i:5"></i><div class="fmt"><div class="row"><svg class="ic"><use href="#i-page"/></svg><b>Landing page KFC</b></div><p class="hide-p hide-s">Destino do clique.</p></div></div>
-      <div class="col a" style="--i:6"><div class="ph"><svg class="ic"><use href="#i-image"/></svg><span>Imagem</span></div><i class="conn" style="--i:6"></i><div class="fmt"><div class="row"><svg class="ic"><use href="#i-bag"/></svg><b>99Food</b></div><p class="hide-p hide-s">Pedidos da Terça Balde.</p></div></div>
-    </div>
+  </div></div>
+  <div class="shot cut a-pop" style="--i:4"><img src="assets/kfc.png" alt="Balde da KFC com frango saindo da parede e a frase Toda terça, o balde é o ídolo"></div>
+  <div class="c-cols hide-p hide-s">
+      <div class="ccol"><svg class="ic"><use href="#i-route"/></svg><div><b>Vídeo na viagem</b><p>A mídia em vídeo ocupa a tela durante a corrida e leva o usuário direto à landing page da KFC no 99Food.</p></div></div>
+      <div class="ccol"><svg class="ic"><use href="#i-bag"/></svg><div><b>Resultado em vendas</b><p>Cada R$ 1 investido voltou como R$ 5 em vendas em 14 dias, com ticket médio de R$ 71,51.</p></div></div>
   </div>
 </section>
 
-<!-- 5. CASE 3 -->
-<section class="slide content" data-name="case-3" aria-label="Case 3">
-  <div class="left">
-    <div class="head">
-      <p class="eyebrow a" style="--i:0">Case 3 · Marca de Sorvetes</p>
-      <h2 class="title a" style="--i:1">Mais pedidos no app para o B2B</h2>
-      <p class="lede a hide-s" style="--i:2">A marca de sorvetes apostou em aumentar os pedidos no app para clientes B2B.</p>
-    </div>
-    <div class="left-cards">
-      <div class="info a hide-p hide-s" style="--i:3"><svg class="ic"><use href="#i-store"/></svg><div><b>Foco B2B</b><span>Pedidos feitos pelo app</span></div></div>
-      <div class="bars a" style="--i:4">
-        <div class="row"><div class="t"><span>Acessos ao cardápio</span><em>+122%</em></div><div class="track"><div class="bar" style="width:calc(222/438*100%);--i:4"></div><i class="base" style="left:calc(100/438*100%)"></i></div></div>
-        <div class="row"><div class="t"><span>Pedidos</span><em>+338%</em></div><div class="track"><div class="bar y" style="width:100%;--i:5"></div><i class="base" style="left:calc(100/438*100%)"></i></div></div>
-        <small class="hide-s">Barras em escala. A linha tracejada marca a base 100.</small>
-      </div>
-    </div>
+<!-- CASE 3 -->
+<section class="slide case" data-name="case-3" aria-label="Case 3">
+  <div class="c-left">
+    <p class="eyebrow a" style="--i:0">Case 3</p>
+    <div class="c-name a" style="--i:1"><svg class="ic"><use href="#i-cone"/></svg><h2>Marca de Sorvetes</h2></div>
+    <p class="c-sub a" style="--i:2">Mais pedidos no app para o B2B</p>
+    <p class="c-par a hide-p hide-s" style="--i:3">A marca de sorvetes apostou em aumentar os pedidos no app para clientes B2B.</p>
   </div>
-  <div class="right">
-    <div class="kpis">
-      <div class="kpi-wrap a" style="--i:1"><div class="kpi"><span class="k">CTR Pop Up</span><span class="v"><span class="cnt" data-v="2.4" data-d="1" data-dec="," data-suf="%">2,4%</span></span></div><div class="cap hide-s"><svg class="ic"><use href="#i-click"/></svg><div><b>Taxa de cliques</b><span>Do Pop Up no app</span></div></div></div>
-      <div class="kpi-wrap a" style="--i:2"><div class="kpi"><span class="k">Acessos ao cardápio</span><span class="v"><span class="cnt" data-v="122" data-d="0" data-pre="+" data-suf="%">+122%</span></span></div><div class="cap hide-s"><svg class="ic"><use href="#i-menu"/></svg><div><b>Mais gente no cardápio</b><span>Aumento no período</span></div></div></div>
-      <div class="kpi-wrap a" style="--i:3"><div class="kpi y"><span class="k">Pedidos</span><span class="v"><span class="cnt" data-v="338" data-d="0" data-pre="+" data-suf="%">+338%</span></span></div><div class="cap hide-s"><svg class="ic"><use href="#i-cart"/></svg><div><b>Mais pedidos no app</b><span>Aumento no período</span></div></div></div>
+  <div class="c-kpis">
+      <div class="kpi-wrap a" style="--i:1"><div class="kpi"><span class="k">CTR Pop Up</span><span class="v"><span class="cnt" data-v="2.4" data-d="1" data-dec="," data-suf="%">2,4%</span></span></div><div class="cap hide-s"><svg class="ic"><use href="#i-click"/></svg><div><b>Taxa de cliques</b><span>Pop Up no app</span></div></div></div>
+      <div class="kpi-wrap a" style="--i:2"><div class="kpi"><span class="k">Acessos ao cardápio</span><span class="v"><span class="cnt" data-v="122" data-d="0" data-pre="+" data-suf="%">+122%</span></span></div><div class="cap hide-s"><svg class="ic"><use href="#i-menu"/></svg><div><b>Mais gente no cardápio</b><span>Aumento de acessos</span></div></div></div>
+      <div class="kpi-wrap a" style="--i:3"><div class="kpi y"><span class="k">Pedidos</span><span class="v"><span class="cnt" data-v="338" data-d="0" data-pre="+" data-suf="%">+338%</span></span></div><div class="cap hide-s"><svg class="ic"><use href="#i-cart"/></svg><div><b>Mais pedidos no app</b><span>Aumento nos pedidos B2B</span></div></div></div>
+  </div>
+  <div class="c-mid"><div class="c-card a" style="--i:5">
+    <h3>Crescimento com base 100</h3>
+    <div class="c-items">
+        <div class="pi"><svg class="ic"><use href="#i-menu"/></svg><div><b>Acessos ao cardápio</b><span>de 100 para 222</span></div></div>
+        <div class="pi"><svg class="ic"><use href="#i-cart"/></svg><div><b>Pedidos</b><span>de 100 para 438</span></div></div>
     </div>
-    <div class="trio">
-      <div class="col a" style="--i:4"><div class="ph"><svg class="ic"><use href="#i-image"/></svg><span>Imagem</span></div><i class="conn" style="--i:4"></i><div class="fmt"><div class="row"><svg class="ic"><use href="#i-click"/></svg><b>Pop Up</b></div><p class="hide-p hide-s">CTR de 2,4%.</p></div></div>
-      <div class="col a" style="--i:5"><div class="ph"><svg class="ic"><use href="#i-image"/></svg><span>Imagem</span></div><i class="conn" style="--i:5"></i><div class="fmt"><div class="row"><svg class="ic"><use href="#i-menu"/></svg><b>Cardápio</b></div><p class="hide-p hide-s">+122% em acessos.</p></div></div>
-      <div class="col a" style="--i:6"><div class="ph"><svg class="ic"><use href="#i-image"/></svg><span>Imagem</span></div><i class="conn" style="--i:6"></i><div class="fmt"><div class="row"><svg class="ic"><use href="#i-cart"/></svg><b>Pedidos</b></div><p class="hide-p hide-s">+338% pelo app.</p></div></div>
-    </div>
+  </div></div>
+  <div class="shot cut a-pop" style="--i:4"><img src="assets/sorvete.png" alt="Taça de sorvete com chantilly, cobertura de chocolate e caramelo, cereja e raspas de chocolate" style="object-position:38% bottom"></div>
+  <div class="c-cols hide-p hide-s">
+      <div class="ccol"><svg class="ic"><use href="#i-click"/></svg><div><b>Interação com Pop Up</b><p>Pop Up para gerar interação dentro do app, com CTR de 2,4%.</p></div></div>
+      <div class="ccol"><svg class="ic"><use href="#i-cart"/></svg><div><b>Pedidos B2B crescendo mais</b><p>Os pedidos cresceram 338%, bem acima dos 122% de aumento em acessos ao cardápio.</p></div></div>
   </div>
 </section>
 
