@@ -64,11 +64,23 @@ img,svg{display:block}
 
 .logo99ads{position:absolute;left:1764px;top:1010px;width:73.039px;height:19px}
 
-.fmtbox{position:absolute;left:156px;width:411px;display:flex;gap:12px;padding:16px;border:1px solid #808080;border-radius:8px;color:var(--fg)}
+/* cartões brancos (Objetivo / Desafio / Solução Proposta) */
+.cards{display:flex;flex-direction:column;gap:24px;width:100%}
+.ucard{background:#fff;border:1px solid #e2e8f0;border-radius:8px;width:100%}
+.ucard .hd{display:flex;align-items:center;gap:6px;padding:16px 24px}
+.ucard .hd img{width:32px;height:32px;flex:none}
+.ucard .hd b{font:700 24px/1 var(--didi);letter-spacing:-.6px;color:#020617;white-space:nowrap}
+.ucard .hd b small{font:500 16px/1 var(--didi);letter-spacing:-.6px}
+.ucard p{padding:0 24px 24px;font:400 18px/24px var(--didi);letter-spacing:-.6px;color:var(--n700)}
+.ucard.l32 p{line-height:32px}
+
+.fmtbox{position:absolute;left:156px;width:411px;display:flex;gap:12px;padding:16px;border:1px solid #808080;border-radius:8px;color:var(--fg);background:var(--bg);z-index:5}
 .fmtbox img{width:32px;height:32px;flex:none}
 .fmtbox .t{flex:1;min-width:1px;display:flex;flex-direction:column;gap:8px}
 .fmtbox .t b{font:700 20px/1 var(--didi)}
-.fmtbox ul{font:400 20px/1.2 var(--didi);letter-spacing:-.6px;list-style:disc;padding-left:30px}
+.fmtbox ul{font:400 20px/1.2 var(--didi);letter-spacing:-.6px;list-style:none;padding-left:30px}
+.fmtbox li{position:relative}
+.fmtbox li::before{content:'';position:absolute;left:-15px;top:50%;width:3.5px;height:3.5px;margin-top:-1.5px;border-radius:50%;background:currentColor} /* bolinha pequena e centralizada, como no Figma */
 
 .vant{position:absolute;width:378px;display:flex;flex-direction:column;gap:32px;color:var(--fg)}
 .vant>b{font:700 28px/1 var(--didi);letter-spacing:-.7px}
@@ -84,6 +96,91 @@ img,svg{display:block}
 .popup .hd span{flex:1;min-width:1px;font:600 16px/20px var(--graphik);letter-spacing:-.16px;color:#020617}
 .popup p{font:400 14px/18px var(--graphik);color:var(--n700)}
 
+/* ---------- animações de entrada ----------
+   Regra de ouro: o estado final de cada animação é o layout do Figma
+   (sem fill-mode "forwards" em transform), então o repouso é idêntico. */
+:root{--ease-out:cubic-bezier(.16,.84,.24,1);--ease-spring:cubic-bezier(.34,1.56,.64,1)}
+
+/* revelação por máscara (texto sobe de dentro de uma "janela") */
+.mk{display:block;overflow:hidden;padding:.14em 0;margin:-.14em 0}
+.mk.i{display:inline-block;vertical-align:top}
+.mk>span{display:block}
+p:has(>.mk){display:flow-root} /* impede a margem negativa da máscara de vazar e mexer no layout */
+
+@keyframes up{from{transform:translateY(115%)}}
+@keyframes sweep{from{transform:translate(34%,26%) rotate(7deg);opacity:0}to{transform:none;opacity:1}}
+@keyframes rise{from{transform:translateY(110px) scale(.93);opacity:0}to{transform:none;opacity:1}}
+@keyframes pop{0%{transform:scale(.35) rotate(-22deg);opacity:0}55%{transform:scale(1.14) rotate(5deg);opacity:1}78%{transform:scale(.97) rotate(-1.5deg)}100%{transform:none;opacity:1}}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+
+.slide.on .cv-blob1{animation:sweep 1.25s var(--ease-out) .05s backwards}
+.slide.on .cv-blob2{animation:sweep 1.25s var(--ease-out) .22s backwards}
+/* a garota só entra quando o 2º bloco amarelo termina (.22s + 1.25s = 1.47s) */
+.slide.on .cv-girl{animation:rise 1.2s var(--ease-out) 1.5s backwards}
+.slide.on .cv-logo{animation:pop .95s var(--ease-out) 1s backwards}
+.slide.on .mk>span{animation:up .95s var(--ease-out) var(--d,0s) backwards}
+
+/* ----- efeitos reutilizáveis (cada elemento define o atraso em --d) ----- */
+@keyframes fxUp{from{transform:translateY(var(--dy,28px));opacity:0}}
+@keyframes fxPop{from{transform:scale(.9) translateY(18px);opacity:0}}
+@keyframes fxFade{from{opacity:0}}
+@keyframes fxDraw{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
+/* o carro desliza 220px (da direita para a esquerda, de frente) enquanto surge com fade, e desacelera até a posição final */
+@keyframes fxCar{from{transform:translateX(220px);opacity:0}60%{opacity:1}}
+@keyframes fxRing{from{transform:scale(.4) rotate(-30deg);opacity:0}60%{transform:scale(1.06) rotate(3deg)}}
+.slide.on .fx-up{animation:fxUp .9s var(--ease-out) var(--d,0s) backwards}
+/* case 2: a mão sobe girando em torno de um eixo fixo na linha do braço, mas bem abaixo da tela (y=1500):
+   assim a ponta cortada do braço fica sempre fora da área visível durante o arco. Vem de baixo pela esquerda
+   e cruza por trás da caixa de formatos. (O balanço contínuo depois usa o eixo na base do braço, y=1090.) */
+.hand-in{position:absolute;inset:0;transform-origin:1170px 1500px}
+@keyframes handIn{0%{transform:rotate(-62deg);opacity:0}14%{opacity:1}100%{transform:rotate(0)}}
+.slide.on .hand-in{animation:handIn 2.1s cubic-bezier(.25,.6,.2,1) .8s backwards}
+
+/* case 3: sorvete pingando da ponta do cone. O SVG vive DENTRO do contêiner da foto (coordenadas = foto: 808x786,
+   offset 1112/294), então acompanha escala, entrada e qualquer movimento da imagem. Ponta do cone ≈ (225,557);
+   a gota cai ~84px até a madeira (y≈668), onde forma uma pocinha que permanece e cresce a cada gota. As gotas são criadas por JS (tamanho, posição e tempos sorteados). */
+.drips{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.drips .dr,.drips .sp,.drips .th,.drips .pu{opacity:0;transform-box:fill-box}
+.drips .dr,.drips .th{transform-origin:50% 0}
+.drips .sp,.drips .pu{transform-origin:50% 50%}
+body.still .drips{display:none}
+
+/* revelação de baixo para cima (fotos do resumo) + zoom-out suave da imagem */
+@keyframes fxReveal{from{clip-path:inset(100% 0 0 0)}to{clip-path:inset(0 0 0 0)}}
+@keyframes fxZoom{from{transform:scale(1.18)}}
+.slide.on .fx-reveal{animation:fxReveal 1.1s cubic-bezier(.65,0,.2,1) var(--d,0s) backwards}
+.slide.on .fx-zoom{animation:fxZoom 1.8s var(--ease-out) var(--d,0s) backwards}
+
+/* hover das fotos do resumo: o cartão sobe, a foto dá zoom e acompanha o mouse (--lx/--ly de -1 a 1) */
+.rs-col{transition:translate .55s var(--ease-out),filter .55s ease;cursor:pointer}
+.rs-col img{transition:scale .7s var(--ease-out),translate .45s ease-out}
+.rs-col.hov{translate:0 -14px;filter:drop-shadow(0 24px 28px rgba(0,0,0,.32));z-index:2}
+.rs-col.hov img{scale:1.1;translate:calc(var(--lx,0)*-16px) calc(var(--ly,0)*-16px)}
+.rs-lbl{transition:translate .55s var(--ease-out);pointer-events:none}
+.rs-lbl.hov{translate:0 -14px;z-index:3}
+
+/* sobe de baixo para cima, passa um pouco do ponto e assenta (bounce leve) */
+@keyframes fxBounce{from{transform:translateY(44px);opacity:0}55%{transform:translateY(-9px);opacity:1}78%{transform:translateY(3px)}to{transform:none;opacity:1}}
+.slide.on .fx-bounce{animation:fxBounce .95s cubic-bezier(.3,.7,.4,1) var(--d,0s) backwards}
+.slide.on .fx-pop{animation:fxPop .85s var(--ease-spring) var(--d,0s) backwards}
+.slide.on .fx-fade{animation:fxFade .9s ease var(--d,0s) backwards}
+.slide.on .fx-draw{animation:fxDraw .6s cubic-bezier(.5,0,.2,1) var(--d,0s) backwards}
+.slide.on .fx-car{animation:fxCar 1.4s var(--ease-out) var(--d,0s) backwards}.slide.on .fx-ring{animation:fxRing 1.2s var(--ease-out) var(--d,0s) backwards}
+/* parallax do case 1: carro e camada de cima andam juntos */
+.c1-car{translate:calc(var(--mx,0)*-7px) calc(var(--my,0)*-4px)}
+.c1-ring{translate:calc(var(--mx,0)*9px) calc(var(--my,0)*5px)}
+
+/* balanço contínuo da mão (case 2): gira em torno da base do braço, que sai pela borda de baixo (~x1170).
+   O ângulo é calculado em JS (soma de oscilações com ritmos diferentes), para o movimento não ser regular. */
+.sway{position:absolute;inset:0;pointer-events:none;transform-origin:1170px 1090px}
+
+/* parallax suave com o mouse (propriedade `translate`, independente do transform das animações) */
+.px{will-change:translate}
+.cv-girl{translate:calc(var(--mx,0)*-14px) calc(var(--my,0)*-9px)}
+.cv-blob1{translate:calc(var(--mx,0)*18px) calc(var(--my,0)*12px)}
+.cv-blob2{translate:calc(var(--mx,0)*30px) calc(var(--my,0)*20px)}
+.cv-logo{translate:calc(var(--mx,0)*-6px) calc(var(--my,0)*-4px)}
+
 /* ---------- navegação (fora da arte, aparece ao mover o mouse) ---------- */
 #nav{position:fixed;left:50%;bottom:14px;transform:translateX(-50%);display:flex;align-items:center;gap:14px;padding:7px 14px;border-radius:99px;
   background:rgba(33,33,33,.82);color:#fff;font:600 13px/1 'Inter',sans-serif;opacity:0;transition:opacity .3s;z-index:10;backdrop-filter:blur(6px)}
@@ -95,7 +192,13 @@ body.show #nav,#nav:hover,#nav:focus-within{opacity:1}
 #nav .dots button{width:9px;height:9px;background:rgba(255,255,255,.4);border-radius:99px}
 #nav .dots button[aria-current="true"]{background:var(--yellow);width:22px}
 #nav .n{min-width:34px;text-align:center;letter-spacing:.04em}
-@media (prefers-reduced-motion:reduce){.slide,.slide.on{transition:none}}
+@media (prefers-reduced-motion:reduce){
+  .slide,.slide.on{transition:none}
+  .slide.on *{animation:none!important}
+  .cv-girl,.cv-blob1,.cv-blob2,.cv-logo,.c1-car,.c1-ring{translate:none!important}
+  .rs-col,.rs-col img,.rs-lbl{transition:none!important;translate:none!important;scale:none!important;filter:none!important}
+  .drips{display:none}
+}
 </style>
 </head>
 <body>
@@ -103,134 +206,134 @@ body.show #nav,#nav:hover,#nav:focus-within{opacity:1}
 
 <!-- ============ 1. CAPA ============ -->
 <section class="slide on" data-name="capa" aria-label="Capa">
-  <div class="a" style="left:759.56px;top:296.73px;width:1657.865px;height:1551.651px;display:flex;align-items:center;justify-content:center">
+  <div class="a cv-blob1" style="left:759.56px;top:296.73px;width:1657.865px;height:1551.651px;display:flex;align-items:center;justify-content:center">
     <div style="flex:none;width:1373.56px;height:1218.01px;background:var(--yellow-deep);border-radius:181px;transform:rotate(-163.87deg) scaleY(-1)"></div>
   </div>
-  <div class="a" style="left:762.43px;top:321.12px;width:1644.864px;height:1535.761px;display:flex;align-items:center;justify-content:center">
+  <div class="a cv-blob2" style="left:762.43px;top:321.12px;width:1644.864px;height:1535.761px;display:flex;align-items:center;justify-content:center">
     <div style="flex:none;width:1342.194px;height:1168.681px;background:var(--yellow);border:10px solid var(--yellow-deep);border-radius:181px;transform:rotate(-161.4deg) scaleY(-1)"></div>
   </div>
   <div class="a" style="left:324.44px;top:795px;color:#000;line-height:1">
-    <p style="font:800 69.625px/1 'Inter',sans-serif;letter-spacing:-1.3925px;white-space:nowrap">Cases de</p>
-    <p style="font:400 65px/1 'Inter',sans-serif;letter-spacing:-1.3px;white-space:nowrap">SUCESSO</p>
+    <p style="font:800 69.625px/1 'Inter',sans-serif;letter-spacing:-1.3925px;white-space:nowrap"><span class="mk" style="--d:1.15s"><span>Cases de</span></span></p>
+    <p style="font:400 65px/1 'Inter',sans-serif;letter-spacing:-1.3px;white-space:nowrap"><span class="mk" style="--d:1.3s"><span>SUCESSO</span></span></p>
   </div>
-  <img class="a" src="assets/capa-logo99.svg" alt="99" style="left:147px;top:790px;width:145.53px;height:145.53px">
+  <img class="a cv-logo" src="assets/capa-logo99.svg" alt="99" style="left:147px;top:790px;width:145.53px;height:145.53px">
   <div class="a" style="left:147px;top:143px;color:#000;line-height:1;white-space:nowrap">
-    <p style="font:400 40px/1 'Inter',sans-serif;letter-spacing:-.8px">Setor de Alimentos</p>
-    <p style="font:700 60px/1 'Inter',sans-serif;letter-spacing:-1.2px;margin-top:0">2026</p>
+    <p style="font:400 40px/1 'Inter',sans-serif;letter-spacing:-.8px"><span class="mk" style="--d:.35s"><span>Setor de Alimentos</span></span></p>
+    <p style="font:700 60px/1 'Inter',sans-serif;letter-spacing:-1.2px;margin-top:0" aria-label="2026"><span class="mk i" style="--d:.55s" aria-hidden="true"><span>2</span></span><span class="mk i" style="--d:.63s" aria-hidden="true"><span>0</span></span><span class="mk i" style="--d:.71s" aria-hidden="true"><span>2</span></span><span class="mk i" style="--d:.79s" aria-hidden="true"><span>6</span></span></p>
   </div>
-  <div class="a" style="left:828px;top:49px;width:1079px;height:1079px"><img class="fill" style="object-fit:cover" src="assets/capa-garota.png" alt=""></div>
+  <div class="a cv-girl" style="left:828px;top:49px;width:1079px;height:1079px"><img class="fill" style="object-fit:cover" src="assets/capa-garota.png" alt=""></div>
 </section>
 
-<!-- ============ 2. CASE 1 — KIT KAT ============ -->
-<section class="slide" data-name="case 1" aria-label="Case Kit Kat">
-  <div class="vtb">
-    <div class="top">
-      <p class="eyebrow">KIT KAT</p>
-      <div class="stack">
-        <p class="h">36 Milhões de exibições na tela, no clique e na rua</p>
-        <p class="sub">Envelopamento, Sampling e Car Icon em ação</p>
-      </div>
-    </div>
-    <p class="p">A campanha combinou vídeo, Pop Up e 26 carros adesivados com sampling para estar presente dentro do app e nas ruas.</p>
-  </div>
-  <img class="logo99ads" src="assets/c1-union.svg" alt="99Ads">
-
-  <div class="card" style="left:771px"><img src="assets/c1-ic-pointer.svg" alt=""><div class="t"><b>Acima da média em vídeos</b><span>Médias de 3,4% e 3,0% em 2026</span></div></div>
-  <div class="card" style="left:1112px"><img src="assets/c1-ic-play.svg" alt=""><div class="t"><b>Vídeos assistidos</b><span>Taxa de visualização</span></div></div>
-  <div class="card" style="left:1454px"><img src="assets/c1-ic-eye.svg" alt=""><div class="t"><b>27 Mi de exibições Car Icon</b><span>Dentro do total de 36 Milhões</span></div></div>
-
-  <div class="tot" style="left:771px;width:310px"><p class="k">ctr total</p><p class="v">3,85%</p></div>
-  <div class="tot" style="left:1112px;width:311px"><p class="k">vtr</p><p class="v">46%</p></div>
-  <div class="tot y" style="left:1454px;width:310px"><p class="k">impactos totais</p><p class="v">36 Mi</p></div>
-
-  <!-- carro com máscara -->
-  <div class="a" style="left:660.958px;top:414.612px;width:961.306px;height:639.766px;overflow:hidden;
-       -webkit-mask-image:url(assets/c1-mask.svg);mask-image:url(assets/c1-mask.svg);-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
-       -webkit-mask-size:1228.704px 825.397px;mask-size:1228.704px 825.397px;-webkit-mask-position:-146.958px -160.218px;mask-position:-146.958px -160.218px;mask-mode:alpha">
-    <img class="a" style="height:129%;left:-15.27%;top:-25.03%;width:127.78%;max-width:none" src="assets/c1-carro.png" alt="Carro adesivado Kit Kat">
-  </div>
-
-  <div class="popup" style="left:1264px"><div class="hd"><img src="assets/c1-ic-car-popup.svg" alt=""><span>Envelopamento</span></div><p>Carro adesivado com a marca circulando em pontos estratégicos.</p></div>
-  <img class="a" src="assets/c1-line1.svg" alt="" style="left:1307.67px;top:786.67px;width:132.667px;height:10.667px;transform:rotate(90deg)">
-
-  <div class="a" style="left:1514px;top:389px;width:254px;height:254px;border-radius:125.337px;overflow:hidden">
-    <img class="a" style="height:170.57%;left:.06%;top:-43.53%;width:99.94%;max-width:none" src="assets/c1-interno.png" alt="Propaganda dentro do carro">
-    <div class="a" style="inset:0;border:5.791px solid #fff;border-radius:125.337px"></div>
-  </div>
-
-  <div class="popup" style="left:1531px"><div class="hd"><img src="assets/c1-ic-view.svg" alt=""><span>Sampling</span></div><p>Marca aplicada dentro do carro em contato direto com o passageiro.</p></div>
-  <img class="a" src="assets/c1-line2.svg" alt="" style="left:1527.17px;top:739.17px;width:227.667px;height:10.668px;transform:rotate(90deg)">
-
-  <div class="a" style="left:661px;top:415px;width:946px;height:284px;overflow:hidden">
-    <img class="a" style="height:290.62%;left:-15.52%;top:-56.4%;width:129.87%;max-width:none" src="assets/c1-carro-topo.png" alt="">
-  </div>
-
-  <div class="a" style="left:771px;top:330px;width:378px;display:flex;gap:12px;align-items:flex-start">
-    <img src="assets/c1-ic-car.svg" alt="" style="width:32px;height:32px;flex:none">
-    <div style="flex:1;min-width:1px;display:flex;flex-direction:column;gap:8px;color:var(--fg);font-size:20px">
-      <p style="font:700 20px/1.6 var(--didi)">Métricas do envelopamento</p>
-      <div style="font:400 20px/1.2 var(--didi);letter-spacing:-.6px"><p>26 Carros adesivados</p><p>64.237 Km Rodados</p><p>2,31 Milhões de exibições</p></div>
-    </div>
-  </div>
-
-  <div class="fmtbox" style="top:774px">
-    <img src="assets/c1-ic-smartphone.svg" alt="">
-    <div class="t"><b>Formatos utilizados na campanha</b>
-      <ul><li>Sampling</li><li>Envelopamento</li><li>Waiting For (Vídeo)</li><li>In Trip (Vídeo)</li><li>Pop Up</li><li>Car Icon</li></ul></div>
-  </div>
-</section>
-
-<!-- ============ 3. RESUMO ============ -->
+<!-- ============ 2. RESUMO ============ -->
 <section class="slide" data-name="resumo" aria-label="Resumo">
-  <div class="a" style="left:771px;top:370px;width:331px;height:610px;overflow:hidden">
-    <img class="a" style="height:137.82%;left:-2.54%;top:-26.19%;width:124.82%;max-width:none" src="assets/r-img1.png" alt="Pop Up Kit Kat">
+  <div class="a fx-reveal rs-col" data-i="0" style="--d:1.3s;left:771px;top:370px;width:331px;height:610px;overflow:hidden">
+    <img class="a fx-zoom" style="--d:1.3s;height:137.82%;left:-2.54%;top:-26.19%;width:124.82%;max-width:none" src="assets/r-img1.png" alt="Pop Up Kit Kat">
     <div class="a" style="inset:0;background:linear-gradient(to top,rgba(0,0,0,.8) 16.721%,rgba(0,0,0,0) 69.016%)"></div>
   </div>
-  <div class="a" style="left:1102px;top:370px;width:331px;height:610px;overflow:hidden">
-    <img class="a" style="height:114.45%;left:-1.83%;top:-14.51%;width:103.66%;max-width:none" src="assets/r-img2.png" alt="Balde KFC">
+  <div class="a fx-reveal rs-col" data-i="1" style="--d:1.55s;left:1102px;top:370px;width:331px;height:610px;overflow:hidden">
+    <img class="a fx-zoom" style="--d:1.55s;height:114.45%;left:-1.83%;top:-14.51%;width:103.66%;max-width:none" src="assets/r-img2.png" alt="Balde KFC">
     <div class="a" style="inset:0;background:linear-gradient(to top,rgba(0,0,0,.9) 16.557%,rgba(0,0,0,0) 61.475%)"></div>
   </div>
-  <div class="a" style="left:1433px;top:370px;width:331px;height:610px;overflow:hidden">
-    <img class="fill" style="object-fit:cover" src="assets/r-img3.png" alt="Sorvetes">
+  <div class="a fx-reveal rs-col" data-i="2" style="--d:1.8s;left:1433px;top:370px;width:331px;height:610px;overflow:hidden">
+    <img class="fill fx-zoom" style="--d:1.8s;object-fit:cover" src="assets/r-img3.png" alt="Sorvetes">
     <div class="a" style="inset:0;background:linear-gradient(to top,rgba(0,0,0,.9) 16.885%,rgba(0,0,0,0) 61.311%)"></div>
   </div>
 
   <div class="vtb" style="top:103px;width:410px">
     <div class="top" style="line-height:1">
-      <p class="eyebrow">RESUMO</p>
-      <p class="h">Atenção que vira clique e clique que vira pedido</p>
+      <p class="eyebrow"><span class="mk" style="--d:.15s"><span>RESUMO</span></span></p>
+      <p class="h fx-up" style="--d:.25s;--dy:34px">Atenção que vira clique e clique que vira pedido</p>
     </div>
-    <p class="p">A 99 coloca sua marca diante de quem está em movimento: o vídeo prende a atenção, o Pop Up provoca o clique e os carros adesivados levam a marca pela cidade.</p>
+    <p class="p fx-up" style="--d:.45s;--dy:26px">A 99 coloca sua marca diante de quem está em movimento: o vídeo prende a atenção, o Pop Up provoca o clique e os carros adesivados levam a marca pela cidade.</p>
   </div>
-  <img class="logo99ads" src="assets/r-union.svg" alt="99Ads">
+  <img class="logo99ads fx-fade" style="--d:3.2s" src="assets/r-union.svg" alt="99Ads">
 
-  <p class="a" style="left:771px;top:103px;width:993px;font:600 28px/34px var(--graphik);letter-spacing:-.84px;color:var(--fg)">CTR médio por formato</p>
+  <p class="a fx-up" style="--d:.3s;--dy:22px;left:771px;top:103px;width:993px;font:600 28px/34px var(--graphik);letter-spacing:-.84px;color:var(--fg)">CTR médio por formato</p>
 
-  <div class="card" style="left:771px;top:297px"><img src="assets/r-ic-route.svg" alt=""><div class="t"><b>Vídeo durante a viagem</b><span>Prende a atenção durante a corrida</span></div></div>
-  <div class="card" style="left:1112px;top:297px"><img src="assets/r-ic-play.svg" alt=""><div class="t"><b>Vídeo na espera</b><span>Atenção antes da corrida</span></div></div>
-  <div class="card" style="left:1454px;top:297px"><img src="assets/r-ic-pointer.svg" alt=""><div class="t"><b>Anúncio destaque</b><span>O formato que mais gera interação</span></div></div>
+  <div class="card fx-bounce" style="left:771px;top:297px;--d:1s"><img src="assets/r-ic-route.svg" alt=""><div class="t"><b>Vídeo durante a viagem</b><span>Prende a atenção durante a corrida</span></div></div>
+  <div class="card fx-bounce" style="left:1112px;top:297px;--d:1.18s"><img src="assets/r-ic-play.svg" alt=""><div class="t"><b>Vídeo na espera</b><span>Atenção antes da corrida</span></div></div>
+  <div class="card fx-bounce" style="left:1454px;top:297px;--d:1.36s"><img src="assets/r-ic-pointer.svg" alt=""><div class="t"><b>Anúncio destaque</b><span>O formato que mais gera interação</span></div></div>
 
-  <div class="tot" style="left:771px;top:173px;width:310px"><p class="k">In trip (vídeo)</p><p class="v">3,0%</p></div>
-  <div class="tot" style="left:1112px;top:173px;width:311px"><p class="k" style="text-transform:none">WAITING FOR (VÍDEO)</p><p class="v">3,4%</p></div>
-  <div class="tot y" style="left:1454px;top:173px;width:310px"><p class="k" style="text-transform:none">POP UP</p><p class="v">8,1%</p></div>
+  <div class="tot fx-pop" style="left:771px;top:173px;width:310px;--d:.35s"><p class="k">In trip (vídeo)</p><p class="v cnt" data-d="350">3,0%</p></div>
+  <div class="tot fx-pop" style="left:1112px;top:173px;width:311px;--d:.5s"><p class="k" style="text-transform:none">WAITING FOR (VÍDEO)</p><p class="v cnt" data-d="500">3,4%</p></div>
+  <div class="tot y fx-pop" style="left:1454px;top:173px;width:310px;--d:.65s"><p class="k" style="text-transform:none">POP UP</p><p class="v cnt" data-d="650">8,1%</p></div>
 
-  <div class="a" style="left:798px;top:862px;width:278px;display:flex;gap:12px;color:#fff">
+  <div class="a fx-up rs-lbl" data-i="0" style="--d:2.1s;--dy:20px;left:798px;top:862px;width:278px;display:flex;gap:12px;color:#fff">
     <img src="assets/r-ic-radar.svg" alt="" style="width:32px;height:32px;flex:none">
     <div style="flex:1;min-width:1px;display:flex;flex-direction:column;gap:8px"><p style="font:700 20px/1 var(--didi)">Case KitKat</p><p style="font:400 16px/20px var(--graphik);letter-spacing:-.16px">36 milhões de exibições entre carros adesivados, sampling e car icon.</p></div>
   </div>
-  <div class="a" style="left:1129px;top:862px;width:278px;display:flex;gap:12px;color:#fff">
+  <div class="a fx-up rs-lbl" data-i="1" style="--d:2.35s;--dy:20px;left:1129px;top:862px;width:278px;display:flex;gap:12px;color:#fff">
     <img src="assets/r-ic-radar.svg" alt="" style="width:32px;height:32px;flex:none">
     <div style="flex:1;min-width:1px;display:flex;flex-direction:column;gap:8px"><p style="font:700 20px/1 var(--didi)">Case KFC</p><p style="font:400 16px/20px var(--graphik);letter-spacing:-.16px">Aumento considerável na conversão onde cada R$ 1 virou R$ 5 em 14 dias.</p></div>
   </div>
-  <div class="a" style="left:1460px;top:862px;width:278px;display:flex;gap:12px;color:#fff">
+  <div class="a fx-up rs-lbl" data-i="2" style="--d:2.6s;--dy:20px;left:1460px;top:862px;width:278px;display:flex;gap:12px;color:#fff">
     <img src="assets/r-ic-radar.svg" alt="" style="width:32px;height:32px;flex:none">
     <div style="flex:1;min-width:1px;display:flex;flex-direction:column;gap:8px"><p style="font:700 20px/1 var(--didi)">Case Kibon</p><p style="font:400 16px/20px var(--graphik);letter-spacing:-.16px">Aumento de 338% no número de pedidos B2B no período da campanha.</p></div>
   </div>
 
-  <img class="a" src="assets/r-line1.svg" alt="" style="left:102px;top:922px;width:112px;height:4px;transform:rotate(90deg)">
-  <div class="a" style="left:188px;top:868px;width:560px;color:rgba(33,33,33,.7);font:400 24px/28px var(--graphik);letter-spacing:-.72px">
+  <img class="a fx-draw" src="assets/r-line1.svg" alt="" style="--d:1.7s;left:102px;top:922px;width:112px;height:4px;transform:rotate(90deg)">
+  <div class="a fx-up" style="--d:1.9s;--dy:22px;left:188px;top:868px;width:560px;color:rgba(33,33,33,.7);font:400 24px/28px var(--graphik);letter-spacing:-.72px">
     <p style="white-space:pre-wrap">Três cases, três resultados: </p>
     <ul style="list-style:disc;padding-left:36px"><li>Alcance em escala, </li><li>Retorno em vendas,</li><li>Pedidos no app.</li></ul>
+  </div>
+</section>
+
+<!-- ============ 3. CASE 1 — KIT KAT ============ -->
+<section class="slide" data-name="case 1" aria-label="Case Kit Kat">
+  <div class="vtb">
+    <div class="top">
+      <p class="eyebrow"><span class="mk" style="--d:.15s"><span>KIT KAT</span></span></p>
+      <div class="stack">
+        <p class="h fx-up" style="--d:.25s;--dy:34px">36 Milhões de exibições na tela, no clique e na rua</p>
+        <p class="sub fx-up" style="--d:.4s;--dy:30px">Envelopamento, Sampling e Car Icon em ação</p>
+      </div>
+    </div>
+    <div class="cards"><div class="ucard fx-up" style="--d:0.55s;--dy:26px"><div class="hd"><img src="assets/ic-target.svg" alt=""><b>Objetivo <small>(Reconhecimento)</small></b></div><p>A campanha combinou vídeo, Pop Up e 26 carros adesivados com sampling para estar presente dentro do app e nas ruas.</p></div></div>
+  </div>
+  <img class="logo99ads fx-fade" style="--d:3.4s" src="assets/c1-union.svg" alt="99Ads">
+
+  <div class="card fx-bounce" style="left:771px;--d:1s"><img src="assets/c1-ic-pointer.svg" alt=""><div class="t"><b>Acima da média em vídeos</b><span>Médias de 3,4% e 3,0% em 2026</span></div></div>
+  <div class="card fx-bounce" style="left:1112px;--d:1.18s"><img src="assets/c1-ic-play.svg" alt=""><div class="t"><b>Vídeos assistidos</b><span>Taxa de visualização</span></div></div>
+  <div class="card fx-bounce" style="left:1454px;--d:1.36s"><img src="assets/c1-ic-eye.svg" alt=""><div class="t"><b>27 Mi de exibições Car Icon</b><span>Dentro do total de 36 Milhões</span></div></div>
+
+  <div class="tot fx-pop" style="left:771px;width:310px;--d:.35s"><p class="k">ctr total</p><p class="v cnt" data-d="350">3,85%</p></div>
+  <div class="tot fx-pop" style="left:1112px;width:311px;--d:.5s"><p class="k">vtr</p><p class="v cnt" data-d="500">46%</p></div>
+  <div class="tot y fx-pop" style="left:1454px;width:310px;--d:.65s"><p class="k">impactos totais</p><p class="v cnt" data-d="650">36 Mi</p></div>
+
+  <!-- carro com máscara -->
+  <div class="a c1-car fx-car" style="--d:.8s;left:660.958px;top:414.612px;width:961.306px;height:639.766px;overflow:hidden;
+       -webkit-mask-image:url(assets/c1-mask.svg);mask-image:url(assets/c1-mask.svg);-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
+       -webkit-mask-size:1228.704px 825.397px;mask-size:1228.704px 825.397px;-webkit-mask-position:-146.958px -160.218px;mask-position:-146.958px -160.218px;mask-mode:alpha">
+    <img class="a" style="height:129%;left:-15.27%;top:-25.03%;width:127.78%;max-width:none" src="assets/c1-carro.png" alt="Carro adesivado Kit Kat">
+  </div>
+
+  <div class="popup fx-up" style="left:1264px;--d:3s;--dy:26px"><div class="hd"><img src="assets/c1-ic-car-popup.svg" alt=""><span>Envelopamento</span></div><p>Carro adesivado com a marca circulando em pontos estratégicos.</p></div>
+  <img class="a fx-draw" src="assets/c1-line1.svg" alt="" style="--d:2.5s;left:1307.67px;top:786.67px;width:132.667px;height:10.667px;transform:rotate(90deg)">
+
+  <div class="a c1-ring fx-ring" style="--d:1.2s;left:1514px;top:389px;width:254px;height:254px;border-radius:125.337px;overflow:hidden">
+    <img class="a" style="height:170.57%;left:.06%;top:-43.53%;width:99.94%;max-width:none" src="assets/c1-interno.png" alt="Propaganda dentro do carro">
+    <div class="a" style="inset:0;border:5.791px solid #fff;border-radius:125.337px"></div>
+  </div>
+
+  <div class="popup fx-up" style="left:1531px;--d:2.7s;--dy:26px"><div class="hd"><img src="assets/c1-ic-view.svg" alt=""><span>Sampling</span></div><p>Marca aplicada dentro do carro em contato direto com o passageiro.</p></div>
+  <img class="a fx-draw" src="assets/c1-line2.svg" alt="" style="--d:2.2s;left:1527.17px;top:739.17px;width:227.667px;height:10.668px;transform:rotate(90deg)">
+
+  <div class="a c1-car fx-car" style="--d:.8s;left:661px;top:415px;width:946px;height:284px;overflow:hidden">
+    <img class="a" style="height:290.62%;left:-15.52%;top:-56.4%;width:129.87%;max-width:none" src="assets/c1-carro-topo.png" alt="">
+  </div>
+
+  <div class="a fx-up" style="--d:1.5s;--dy:22px;left:771px;top:330px;width:378px;display:flex;gap:12px;align-items:flex-start">
+    <img src="assets/c1-ic-car.svg" alt="" style="width:32px;height:32px;flex:none">
+    <div style="flex:1;min-width:1px;display:flex;flex-direction:column;gap:8px;color:var(--fg);font-size:20px">
+      <p style="font:700 20px/1.6 var(--didi)">Métricas do envelopamento</p>
+      <div style="font:400 20px/1.2 var(--didi);letter-spacing:-.6px"><p><span class="cnt" data-d="1650">26</span> Carros adesivados</p><p><span class="cnt" data-d="1850">64.237</span> Km Rodados</p><p><span class="cnt" data-d="2050">2,31</span> Milhões de exibições</p></div>
+    </div>
+  </div>
+
+  <div class="fmtbox fx-up" style="--d:1.3s;--dy:24px;top:774px">
+    <img src="assets/c1-ic-smartphone.svg" alt="">
+    <div class="t"><b>Formatos utilizados na campanha</b>
+      <ul><li>Sampling</li><li>Envelopamento</li><li>Waiting For (Vídeo)</li><li>In Trip (Vídeo)</li><li>Pop Up</li><li>Car Icon</li></ul></div>
   </div>
 </section>
 
@@ -238,37 +341,38 @@ body.show #nav,#nav:hover,#nav:focus-within{opacity:1}
 <section class="slide" data-name="case 2" aria-label="Case KFC">
   <div class="vtb">
     <div class="top">
-      <p class="eyebrow">KFC</p>
+      <p class="eyebrow"><span class="mk" style="--d:.15s"><span>KFC</span></span></p>
       <div class="stack">
-        <p class="h">Cada R$ 1 investido voltou como R$ 5 em 14 dias.</p>
-        <p class="sub">Desafio aceito e concluído com excelência!</p>
+        <p class="h fx-up" style="--d:.25s;--dy:34px">Cada R$ 1 investido voltou como R$ 5 em 14 dias.</p>
+        <p class="sub fx-up" style="--d:.4s;--dy:30px">Desafio aceito e concluído com excelência!</p>
       </div>
     </div>
-    <div class="p"><p><b>Desafio:</b> aumentar os pedidos da Terça Balde no 99Food.</p><p><b>Solução:</b> vídeo na viagem que levava o passageiro direto à página da KFC no app.</p></div>
+    <div class="cards"><div class="ucard fx-up" style="--d:0.55s;--dy:26px"><div class="hd"><img src="assets/ic-brain.svg" alt=""><b>Desafio</b></div><p>Aumentar os pedidos da Terça do Balde no 99Food.</p></div><div class="ucard fx-up" style="--d:0.7s;--dy:26px"><div class="hd"><img src="assets/ic-gem.svg" alt=""><b>Solução Proposta</b></div><p>Vídeo na viagem que levava o passageiro direto à página da KFC no app.</p></div></div>
   </div>
-  <img class="logo99ads" src="assets/c2-union.svg" alt="99Ads">
+  <img class="logo99ads fx-fade" style="--d:2.8s" src="assets/c2-union.svg" alt="99Ads">
 
-  <div class="card" style="left:771px"><img src="assets/c2-ic-pointer.svg" alt=""><div class="t"><b>CTR em vídeo na viagem</b><span>Médias de 3,4% e 3,0% em 2026</span></div></div>
-  <div class="card" style="left:1112px"><img src="assets/c2-ic-play.svg" alt=""><div class="t"><b>Vídeos assistidos</b><span>Taxa de visualização</span></div></div>
-  <div class="card" style="left:1454px"><img src="assets/c2-ic-eye.svg" alt=""><div class="t"><b>Retorno em 14 dias</b><span>CPC R$ 2,98 | Ticket R$ 71,51</span></div></div>
+  <div class="card fx-bounce" style="left:771px;--d:1s"><img src="assets/c2-ic-pointer.svg" alt=""><div class="t"><b>CTR em vídeo na viagem</b><span>Médias de 3,4% e 3,0% em 2026</span></div></div>
+  <div class="card fx-bounce" style="left:1112px;--d:1.18s"><img src="assets/c2-ic-play.svg" alt=""><div class="t"><b>Vídeos assistidos</b><span>Taxa de visualização</span></div></div>
+  <div class="card fx-bounce" style="left:1454px;--d:1.36s"><img src="assets/c2-ic-card-dollar.svg" alt=""><div class="t"><b>Retorno em 14 dias</b><span>CPC R$ 2,98 | Ticket R$ 71,51</span></div></div>
 
-  <div class="tot" style="left:771px;width:310px"><p class="k">ctr</p><p class="v">2,6%</p></div>
-  <div class="tot" style="left:1112px;width:311px"><p class="k">vtr</p><p class="v">64%</p></div>
-  <div class="tot y" style="left:1454px;width:310px"><p class="k">roas 14d</p><p class="v">5x</p></div>
+  <div class="tot fx-pop" style="left:771px;width:310px;--d:.35s"><p class="k">ctr</p><p class="v cnt" data-d="350">2,6%</p></div>
+  <div class="tot fx-pop" style="left:1112px;width:311px;--d:.5s"><p class="k">vtr</p><p class="v cnt" data-d="500">64%</p></div>
+  <div class="tot y fx-pop" style="left:1454px;width:310px;--d:.65s"><p class="k">roas 14d</p><p class="v cnt" data-d="650">5x</p></div>
 
-  <div class="fmtbox" style="top:870px">
+  <div class="fmtbox fx-up" style="--d:.4s;--dy:24px;top:870px;width:406px">
     <img src="assets/c2-ic-smartphone.svg" alt="">
     <div class="t"><b>Formatos utilizados na campanha</b>
       <ul><li>In Trip (Vídeo)</li><li>Landing page KFC no 99Food</li></ul></div>
   </div>
 
-  <!-- celular na mão -->
-  <div class="a" style="left:526.53px;top:257.68px;width:927.151px;height:893.372px;display:flex;align-items:center;justify-content:center">
+  <!-- celular na mão: as 3 camadas giram juntas em torno da base do braço -->
+  <div class="sway"><div class="hand-in">
+  <div class="a c1-car" style="left:526.53px;top:257.68px;width:927.151px;height:893.372px;display:flex;align-items:center;justify-content:center">
     <div style="flex:none;width:784.014px;height:739.342px;transform:rotate(12.68deg);position:relative;overflow:hidden">
       <img class="a" style="height:99.98%;left:-22.91%;top:0;width:125.71%;max-width:none" src="assets/c2-mao.png" alt="Celular com a campanha do KFC">
     </div>
   </div>
-  <div class="a" style="left:746.13px;top:748.17px;width:262.859px;height:175.091px;display:flex;align-items:center;justify-content:center">
+  <div class="a c1-car" style="left:746.13px;top:748.17px;width:262.859px;height:175.091px;display:flex;align-items:center;justify-content:center">
     <div style="flex:none;width:241.266px;height:125.197px;transform:rotate(12.68deg);position:relative;overflow:hidden;border-radius:5.703px">
       <div class="a" style="left:0;top:0;width:263.747px;height:263.747px;border-radius:5.703px;overflow:hidden">
         <img class="a" style="left:-.42%;top:-49.15%;width:100%;height:100%;max-width:none" src="assets/c2-tela1.png" alt="">
@@ -276,55 +380,91 @@ body.show #nav,#nav:hover,#nav:focus-within{opacity:1}
       <img class="a" style="left:84.32%;top:-15.62%;right:0;bottom:0;width:15.68%;height:115.62%;mix-blend-mode:color-burn;max-width:none" src="assets/c2-union-tela.svg" alt="">
     </div>
   </div>
-  <div class="a" style="left:796.59px;top:730.58px;width:193.393px;height:206.611px;display:flex;align-items:center;justify-content:center">
+  <div class="a c1-car" style="left:796.59px;top:730.58px;width:193.393px;height:206.611px;display:flex;align-items:center;justify-content:center">
     <div style="flex:none;width:158.615px;height:176.096px;transform:rotate(12.68deg);position:relative;overflow:hidden">
       <img class="a" style="height:139.61%;left:-46.39%;top:-18.07%;width:155.42%;max-width:none" src="assets/c2-tela2.png" alt="">
     </div>
   </div>
+  </div></div>
 
   <div class="vant" style="left:1354px;top:442px">
-    <b>O que a campanha entregou:</b>
-    <div class="it"><img src="assets/c2-ic-pointer-lg.svg" alt=""><div class="t"><b>Cliques até o pedido</b><p>Vídeo na viagem levava à landing page da KFC no 99Food, com CTR de 2,6% e CPC de R$ 2,98.</p></div></div>
-    <div class="it"><img src="assets/c2-ic-video.svg" alt=""><div class="t"><b>Vídeo que prende atenção</b><p>VTR de 64%: a maioria dos passageiros assistiu ao vídeo durante a viagem.</p></div></div>
-    <div class="it"><img src="assets/c2-ic-dollar.svg" alt=""><div class="t"><b>Retorno em 14 dias</b><p>ROAS de 5x e ticket médio de R$ 71,51 nos pedidos da Terça Balde.</p></div></div>
+    <b class="fx-up" style="--d:1.2s;--dy:24px">O que a campanha entregou:</b>
+    <div class="it fx-up" style="--d:1.45s;--dy:24px"><img src="assets/c2-ic-pointer-lg.svg" alt=""><div class="t"><b>Cliques até o pedido</b><p>Vídeo na viagem levava à landing page da KFC no 99Food, com CTR de 2,6% e CPC de R$ 2,98.</p></div></div>
+    <div class="it fx-up" style="--d:1.7s;--dy:24px"><img src="assets/c2-ic-video.svg" alt=""><div class="t"><b>Vídeo que prende atenção</b><p>VTR de 64%: a maioria dos passageiros assistiu ao vídeo durante a viagem.</p></div></div>
+    <div class="it fx-up" style="--d:1.95s;--dy:24px"><img src="assets/c2-ic-dollar.svg" alt=""><div class="t"><b>Retorno em 14 dias</b><p>ROAS de 5x e ticket médio de R$ 71,51 nos pedidos da Terça Balde.</p></div></div>
   </div>
 </section>
 
 <!-- ============ 5. CASE 3 — SORVETES ============ -->
 <section class="slide" data-name="case 3" aria-label="Case Sorvetes">
-  <div class="a" style="left:1112px;top:294px;width:808px;height:786px;overflow:hidden">
+  <div class="a fx-car" style="--d:.8s;left:1112px;top:294px;width:808px;height:786px;overflow:hidden">
     <img class="a" style="height:100%;left:-19.39%;top:0;width:121.66%;max-width:none" src="assets/c3-crianca.png" alt="Criança com sorvete">
+    <svg class="drips" viewBox="0 0 808 786" aria-hidden="true">
+      <defs>
+        <radialGradient id="chocG" cx="36%" cy="62%" r="75%"><stop offset="0" stop-color="#8c4a2e"/><stop offset=".4" stop-color="#5c2b1b"/><stop offset=".8" stop-color="#3a180e"/><stop offset="1" stop-color="#26100a"/></radialGradient>
+        <linearGradient id="chocRim" x1="0" y1="0" x2="0" y2="1"><stop offset=".55" stop-color="#d98a4a" stop-opacity="0"/><stop offset="1" stop-color="#d98a4a" stop-opacity=".5"/></linearGradient>
+        <radialGradient id="chocPud" cx="50%" cy="40%" r="75%"><stop offset="0" stop-color="#5a2615"/><stop offset=".6" stop-color="#3d170b"/><stop offset="1" stop-color="#27100a"/></radialGradient>
+      </defs>
+      <ellipse class="pu" cx="225" cy="668" rx="17" ry="4.8" fill="url(#chocPud)"/>
+      <g class="slot">
+        <path class="th" d="M225 555.5c.9 4 1.1 8.5 1.1 13h-2.2c0-4.5.2-9 1.1-13Z" fill="#4a2318"/>
+        <g class="dr">
+          <path d="M225 557C225 557 218.5 567 218.5 572a6.5 6.5 0 0 0 13 0C231.5 567 225 557 225 557Z" fill="url(#chocG)" stroke="#1d0c06" stroke-opacity=".45" stroke-width=".8"/>
+          <path d="M225 557C225 557 218.5 567 218.5 572a6.5 6.5 0 0 0 13 0C231.5 567 225 557 225 557Z" fill="url(#chocRim)"/>
+        </g>
+        <circle class="sp" cx="225" cy="665" r="2.4" fill="#4a2318"/>
+        <circle class="sp" cx="225" cy="665" r="1.9" fill="#4a2318"/>
+      </g>
+      <g class="slot">
+        <path class="th" d="M225 555.5c.9 4 1.1 8.5 1.1 13h-2.2c0-4.5.2-9 1.1-13Z" fill="#4a2318"/>
+        <g class="dr">
+          <path d="M225 557C225 557 218.5 567 218.5 572a6.5 6.5 0 0 0 13 0C231.5 567 225 557 225 557Z" fill="url(#chocG)" stroke="#1d0c06" stroke-opacity=".45" stroke-width=".8"/>
+          <path d="M225 557C225 557 218.5 567 218.5 572a6.5 6.5 0 0 0 13 0C231.5 567 225 557 225 557Z" fill="url(#chocRim)"/>
+        </g>
+        <circle class="sp" cx="225" cy="665" r="2.4" fill="#4a2318"/>
+        <circle class="sp" cx="225" cy="665" r="1.9" fill="#4a2318"/>
+      </g>
+      <g class="slot">
+        <path class="th" d="M225 555.5c.9 4 1.1 8.5 1.1 13h-2.2c0-4.5.2-9 1.1-13Z" fill="#4a2318"/>
+        <g class="dr">
+          <path d="M225 557C225 557 218.5 567 218.5 572a6.5 6.5 0 0 0 13 0C231.5 567 225 557 225 557Z" fill="url(#chocG)" stroke="#1d0c06" stroke-opacity=".45" stroke-width=".8"/>
+          <path d="M225 557C225 557 218.5 567 218.5 572a6.5 6.5 0 0 0 13 0C231.5 567 225 557 225 557Z" fill="url(#chocRim)"/>
+        </g>
+        <circle class="sp" cx="225" cy="665" r="2.4" fill="#4a2318"/>
+        <circle class="sp" cx="225" cy="665" r="1.9" fill="#4a2318"/>
+      </g>
+    </svg>
   </div>
   <div class="vtb">
     <div class="top">
-      <p class="eyebrow">SORVETES</p>
+      <p class="eyebrow"><span class="mk" style="--d:.15s"><span>SORVETES</span></span></p>
       <div class="stack">
-        <p class="h">Pedidos no app B2B cresceram 338%.</p>
-        <p class="sub">Mais acessos ao cardápio, mais pedidos.</p>
+        <p class="h fx-up" style="--d:.25s;--dy:34px">Pedidos no app B2B cresceram 338%.</p>
+        <p class="sub fx-up" style="--d:.4s;--dy:30px">Mais acessos ao cardápio, mais pedidos.</p>
       </div>
     </div>
-    <div class="p"><p><b>Desafio: </b>aumentar os pedidos no app para B2B<b>.</b></p><p><b>Solução: </b>Pop Up no app levando ao cardápio.</p></div>
+    <div class="cards"><div class="ucard fx-up l32" style="--d:0.55s;--dy:26px"><div class="hd"><img src="assets/ic-brain.svg" alt=""><b>Desafio</b></div><p>Aumentar os pedidos no app para B2B.</p></div><div class="ucard fx-up l32" style="--d:0.7s;--dy:26px"><div class="hd"><img src="assets/ic-gem.svg" alt=""><b>Solução Proposta</b></div><p>Pop Up no app levando ao cardápio.</p></div></div>
   </div>
-  <img class="logo99ads" src="assets/c3-union.svg" alt="99Ads">
+  <img class="logo99ads fx-fade" style="--d:2.8s" src="assets/c3-union.svg" alt="99Ads">
 
-  <div class="card" style="left:771px"><img src="assets/c3-ic-pointer.svg" alt=""><div class="t"><b>Mais acessos ao cardápio</b><span>Aumento de 122%</span></div></div>
-  <div class="card" style="left:1112px"><img src="assets/c3-ic-play.svg" alt=""><div class="t"><b>Mais pedidos no app</b><span>Aumento de 338%</span></div></div>
-  <div class="card" style="left:1454px"><img src="assets/c3-ic-eye.svg" alt=""><div class="t"><b>CTR do Pop Up</b><span>Média de 8,1% em 2026</span></div></div>
+  <div class="card fx-bounce" style="left:771px;--d:1s"><img src="assets/c3-ic-card-users.svg" alt=""><div class="t"><b>Mais acessos ao cardápio</b><span>Aumento de 122%</span></div></div>
+  <div class="card fx-bounce" style="left:1112px;--d:1.18s"><img src="assets/c3-ic-card-dollar.svg" alt=""><div class="t"><b>Mais pedidos no app</b><span>Aumento de 338%</span></div></div>
+  <div class="card fx-bounce" style="left:1454px;--d:1.36s"><img src="assets/c3-ic-card-pointer.svg" alt=""><div class="t"><b>CTR do Pop Up</b><span>Média de 8,1% em 2026</span></div></div>
 
-  <div class="tot" style="left:771px;width:310px"><p class="k">acessos ao cardápio</p><p class="v">+122%</p></div>
-  <div class="tot" style="left:1112px;width:311px"><p class="k">pedidos</p><p class="v">+338%</p></div>
-  <div class="tot y" style="left:1454px;width:310px"><p class="k">ctr pop up</p><p class="v">2,4%</p></div>
+  <div class="tot fx-pop" style="left:771px;width:310px;--d:.35s"><p class="k">acessos ao cardápio</p><p class="v cnt" data-d="350">+122%</p></div>
+  <div class="tot fx-pop" style="left:1112px;width:311px;--d:.5s"><p class="k">pedidos</p><p class="v cnt" data-d="500">+338%</p></div>
+  <div class="tot y fx-pop" style="left:1454px;width:310px;--d:.65s"><p class="k">ctr pop up</p><p class="v cnt" data-d="650">2,4%</p></div>
 
-  <div class="fmtbox" style="top:894px">
+  <div class="fmtbox fx-up" style="--d:1.3s;--dy:24px;top:894px;width:406px">
     <img src="assets/c3-ic-smartphone.svg" alt="">
     <div class="t"><b>Formatos utilizados na campanha</b><ul><li>Pop Up</li></ul></div>
   </div>
 
   <div class="vant" style="left:793px;top:432px">
-    <b>O que a campanha entregou:</b>
-    <div class="it"><img src="assets/c3-ic-view-lg.svg" alt=""><div class="t"><b>Mais acessos ao cardápio</b><p>Aumento de 122% nos acessos ao cardápio dentro do app.</p></div></div>
-    <div class="it"><img src="assets/c3-ic-smartphone-lg.svg" alt=""><div class="t"><b>Pop Up que gera interação</b><p>CTR de 2,4% no Pop Up, formato de interação dentro do app.</p></div></div>
-    <div class="it"><img src="assets/c3-ic-dollar.svg" alt=""><div class="t"><b>Mais pedidos B2B</b><p>Aumento de 338% nos pedidos pelo app para B2B.</p></div></div>
+    <b class="fx-up" style="--d:1.2s;--dy:24px">O que a campanha entregou:</b>
+    <div class="it fx-up" style="--d:1.45s;--dy:24px"><img src="assets/c3-ic-view-lg.svg" alt=""><div class="t"><b>Mais acessos ao cardápio</b><p>Aumento de 122% nos acessos ao cardápio dentro do app.</p></div></div>
+    <div class="it fx-up" style="--d:1.7s;--dy:24px"><img src="assets/c3-ic-smartphone-lg.svg" alt=""><div class="t"><b>Pop Up que gera interação</b><p>CTR de 2,4% no Pop Up, formato de interação dentro do app.</p></div></div>
+    <div class="it fx-up" style="--d:1.95s;--dy:24px"><img src="assets/c3-ic-dollar.svg" alt=""><div class="t"><b>Mais pedidos B2B</b><p>Aumento de 338% nos pedidos pelo app para B2B.</p></div></div>
   </div>
 </section>
 
@@ -348,9 +488,140 @@ body.show #nav,#nav:hover,#nav:focus-within{opacity:1}
     var s=Math.min(innerWidth/1920,innerHeight/1080);
     stage.style.transform='translate('+((innerWidth-1920*s)/2)+'px,'+((innerHeight-1080*s)/2)+'px) scale('+s+')';
   }
+  /* contagem de números: lê o texto original (ex.: "3,85%", "64.237", "36 Mi"), anima de 0 até o valor
+     e termina SEMPRE com o texto original, então o repouso é idêntico ao Figma */
+  var runId=0,noMotion=matchMedia('(prefers-reduced-motion:reduce)').matches;
+  function parseNum(orig){
+    var m=orig.match(/\d[\d.,]*/);if(!m)return null;
+    var t=m[0],dec=0,val;
+    if(t.indexOf(',')>-1){dec=t.length-t.lastIndexOf(',')-1;val=parseFloat(t.replace(/\./g,'').replace(',','.'))}
+    else if(/^\d{1,3}(\.\d{3})+$/.test(t)){val=parseInt(t.replace(/\./g,''),10)}
+    else val=parseInt(t,10);
+    return {tok:t,dec:dec,val:val};
+  }
+  function fmt(v,dec){return v.toLocaleString('pt-BR',{minimumFractionDigits:dec,maximumFractionDigits:dec})}
+  function runCounters(slide){
+    var id=++runId;
+    [].forEach.call(slide.querySelectorAll('.cnt'),function(el){
+      if(el.dataset.orig===undefined)el.dataset.orig=el.textContent;
+      var orig=el.dataset.orig,p=parseNum(orig);
+      if(noMotion||!p){el.textContent=orig;return}
+      var delay=+el.dataset.d||0,dur=+el.dataset.t||1500;
+      el.textContent=orig.replace(p.tok,fmt(0,p.dec));
+      setTimeout(function(){
+        if(id!==runId)return;
+        var t0=performance.now();
+        (function tick(now){
+          if(id!==runId)return;
+          var k=Math.max(0,Math.min(1,(now-t0)/dur)),e=1-Math.pow(1-k,4);
+          el.textContent=k<1?orig.replace(p.tok,fmt(p.val*e,p.dec)):orig;
+          if(k<1)requestAnimationFrame(tick);
+        })(t0);
+      },delay);
+    });
+  }
+  /* gotejamento (case 3): cada gota é sorteada (tamanho, leve deslocamento, tempo de formação e intervalo).
+     Física: a gota engorda e afunda devagar na ponta (a queda começa JÁ em movimento, sem pausa) e depois acelera
+     como queda livre (t²) até a madeira. A próxima gota começa a se formar quando a anterior se solta. */
+  var dripTimer=0,dripSvg=null;
+  function stopDrips(){
+    clearTimeout(dripTimer);dripTimer=0;
+    if(dripSvg){dripSvg.getAnimations({subtree:true}).forEach(function(a){a.cancel()});
+      [].forEach.call(dripSvg.querySelectorAll('.slot'),function(g){g.style.transform='';delete g.dataset.busy});
+      var pp=dripSvg.querySelector('.pu');pp.style.opacity='';pp.style.transform='';dripSvg=null}
+  }
+  function startDrips(slide){
+    var svg=slide.querySelector('.drips');
+    if(!svg||noMotion||document.body.classList.contains('still'))return;
+    dripSvg=svg;
+    var slots=[].slice.call(svg.querySelectorAll('.slot')),FALL=84,pu=svg.querySelector('.pu'),puS=0;
+    function rnd(a,b){return a+Math.random()*(b-a)}
+    function spawn(){
+      var g=slots.filter(function(x){return !x.dataset.busy})[0];
+      if(!g)return rnd(1.2,2);
+      var G=rnd(2.6,4.4),F=rnd(.5,.62),T=G+F,size=rnd(.82,1.18),dx=rnd(-2.5,2.5);
+      g.dataset.busy=1;
+      g.style.transform='translate('+dx.toFixed(2)+'px,0)';
+      var dr=g.querySelector('.dr'),th=g.querySelector('.th'),sp=g.querySelectorAll('.sp');
+      var o=function(x){return Math.min(1,x/T)};
+      var sc=function(x,y){return 'scale('+(x*size).toFixed(3)+','+(y*size).toFixed(3)+')'};
+      /* gota: 1) cresce redonda; 2) estica e AFUNDA já acelerando; 3) cai em queda livre (t²) sem nenhuma parada.
+         O tamanho sorteado escala só a gota; a queda sempre termina no mesmo ponto da madeira. */
+      dr.animate([
+        {offset:0,opacity:0,transform:'translateY(0px) '+sc(.2,.2),easing:'ease-out'},
+        {offset:o(G*.12),opacity:1,transform:'translateY(0px) '+sc(.5,.5),easing:'ease-out'},
+        {offset:o(G*.55),opacity:1,transform:'translateY(0px) '+sc(.9,.95),easing:'cubic-bezier(.45,.05,.9,.75)'},
+        {offset:o(G),opacity:1,transform:'translateY(7px) '+sc(.95,1.22),easing:'cubic-bezier(.55,.085,.68,.53)'},
+        {offset:1,opacity:1,transform:'translateY('+FALL+'px) '+sc(.9,1.34)}
+      ],{duration:T*1000,fill:'none'});
+      /* fio de chocolate que estica e se rompe quando a gota se solta */
+      th.animate([
+        {offset:0,opacity:0,transform:'scale('+size.toFixed(3)+',.2)'},
+        {offset:o(G*.6),opacity:0,transform:'scale('+size.toFixed(3)+',.3)'},
+        {offset:o(G*.7),opacity:.95,transform:'scale('+size.toFixed(3)+',.5)',easing:'ease-in'},
+        {offset:o(G+F*.08),opacity:.95,transform:'scale('+size.toFixed(3)+',1.6)'},
+        {offset:o(G+F*.14),opacity:0,transform:'scale('+size.toFixed(3)+',.2)'},
+        {offset:1,opacity:0,transform:'scale('+size.toFixed(3)+',.2)'}
+      ],{duration:T*1000,fill:'none'});
+      /* ao tocar a madeira: respingo rápido + pocinha de chocolate (sem sombra, anel nem brilho) que some devagar */
+      setTimeout(function(){
+        if(!dripSvg)return;
+        [].forEach.call(sp,function(c,k){
+          var sx=(k?1:-1)*rnd(13,24),py=-rnd(10,17);
+          c.animate([
+            {opacity:1,transform:'translate(0,0)',easing:'ease-out'},
+            {offset:.45,opacity:1,transform:'translate('+(sx*.55).toFixed(1)+'px,'+py.toFixed(1)+'px)',easing:'ease-in'},
+            {offset:.9,opacity:1,transform:'translate('+sx.toFixed(1)+'px,0px)'},
+            {opacity:0,transform:'translate('+sx.toFixed(1)+'px,0px)'}
+          ],{duration:420,fill:'none'});
+        });
+        /* a pocinha NÃO some: surge na 1ª gota e cresce um pouco a cada gota nova, até um limite */
+        var prev=puS,next=puS?Math.min(1.5,puS+.07*size):(.78+.18*size);
+        puS=next;
+        pu.style.opacity='.97';
+        var an=pu.animate(prev?[
+          {transform:'scale('+prev.toFixed(3)+')',easing:'ease-out'},
+          {offset:.45,transform:'scale('+(next*1.05).toFixed(3)+')',easing:'ease-in-out'},
+          {transform:'scale('+next.toFixed(3)+')'}
+        ]:[
+          {transform:'scale(.12)',easing:'cubic-bezier(.2,.8,.3,1)'},
+          {offset:.6,transform:'scale('+(next*1.06).toFixed(3)+')',easing:'ease-in-out'},
+          {transform:'scale('+next.toFixed(3)+')'}
+        ],{duration:prev?520:420,fill:'none'});
+        pu.style.transform='scale('+next.toFixed(3)+')';
+      },T*1000);
+      setTimeout(function(){delete g.dataset.busy},T*1000+450);
+      /* próxima gota: começa a se formar quando esta se solta + intervalo aleatório (às vezes quase imediato) */
+      return G+(Math.random()<.3?rnd(.1,.5):rnd(.8,3.2));
+    }
+    dripTimer=setTimeout(function again(){var next=spawn();dripTimer=setTimeout(again,next*1000)},3000);
+  }
+  /* balanço orgânico: soma de 3 oscilações com períodos que não se encaixam (6,3 s, 3,1 s e 1,9 s), fases sorteadas
+     a cada visita e uma amplitude que "respira" devagar. Começa em 2,9 s (fim da entrada) com subida suave a partir de 0°. */
+  var swayRaf=0,swayEl=null;
+  function stopSway(){cancelAnimationFrame(swayRaf);swayRaf=0;if(swayEl){swayEl.style.transform='';swayEl=null}}
+  function startSway(slide){
+    var el=slide.querySelector('.sway');
+    if(!el||noMotion||document.body.classList.contains('still'))return;
+    swayEl=el;
+    var T=Math.PI*2,p1=Math.random()*T,p2=Math.random()*T,p3=Math.random()*T,p4=Math.random()*T,t0=performance.now()+2900;
+    (function tick(now){
+      var t=(now-t0)/1000;
+      if(t>=0){
+        var r=Math.min(1,t/1.8);r=r*r*(3-2*r);
+        var amp=.75+.25*Math.sin(t*T/11+p4);
+        var a=(1.7*Math.sin(t*T/6.3+p1)+.8*Math.sin(t*T/3.1+p2)+.45*Math.sin(t*T/1.9+p3))*amp*r;
+        el.style.transform='rotate('+a.toFixed(3)+'deg)';
+      }
+      swayRaf=requestAnimationFrame(tick);
+    })(performance.now());
+  }
   function go(n,push){
     i=Math.max(0,Math.min(slides.length-1,n));
     slides.forEach(function(el,k){el.classList.toggle('on',k===i)});
+    runCounters(slides[i]);
+    stopSway();startSway(slides[i]);
+    stopDrips();startDrips(slides[i]);
     [].forEach.call(dots.children,function(b,k){b.setAttribute('aria-current',k===i)});
     count.textContent=(i+1)+' / '+slides.length;
     if(push!==false){try{history.replaceState(null,'','#'+(i+1))}catch(e){}}
@@ -374,10 +645,35 @@ body.show #nav,#nav:hover,#nav:focus-within{opacity:1}
     if(tx===null)return;var d=e.changedTouches[0].clientX-tx;tx=null;
     if(Math.abs(d)>50)go(i+(d<0?1:-1));
   });
+  if(/[?&]still\b/.test(location.search))document.body.classList.add('still');
   var quiet=/[?&]nonav\b/.test(location.search);
   if(quiet)document.getElementById('nav').style.display='none';
   function reveal(){if(quiet)return;document.body.classList.add('show');clearTimeout(hideT);hideT=setTimeout(function(){document.body.classList.remove('show')},2200)}
   addEventListener('mousemove',reveal);addEventListener('touchstart',reveal,{passive:true});
+  /* parallax: suaviza a posição do mouse (-1..1) e publica em --mx/--my no palco */
+  var reduce=matchMedia('(prefers-reduced-motion:reduce)').matches,tgx=0,tgy=0,cx=0,cy=0,raf=0;
+  function loop(){
+    cx+=(tgx-cx)*.07;cy+=(tgy-cy)*.07;
+    stage.style.setProperty('--mx',cx.toFixed(4));stage.style.setProperty('--my',cy.toFixed(4));
+    raf=(Math.abs(tgx-cx)>.001||Math.abs(tgy-cy)>.001)?requestAnimationFrame(loop):0;
+  }
+  if(!reduce)addEventListener('mousemove',function(e){
+    tgx=(e.clientX/innerWidth-.5)*2;tgy=(e.clientY/innerHeight-.5)*2;
+    if(!raf)raf=requestAnimationFrame(loop);
+  });
+  /* hover das fotos do resumo */
+  [].forEach.call(stage.querySelectorAll('.rs-col'),function(col){
+    var lbl=stage.querySelector('.rs-lbl[data-i="'+col.dataset.i+'"]');
+    function set(on){col.classList.toggle('hov',on);if(lbl)lbl.classList.toggle('hov',on)}
+    col.addEventListener('pointerenter',function(e){if(e.pointerType==='mouse')set(true)});
+    col.addEventListener('pointermove',function(e){
+      if(e.pointerType!=='mouse')return;
+      var r=col.getBoundingClientRect();
+      col.style.setProperty('--lx',(((e.clientX-r.left)/r.width-.5)*2).toFixed(3));
+      col.style.setProperty('--ly',(((e.clientY-r.top)/r.height-.5)*2).toFixed(3));
+    });
+    col.addEventListener('pointerleave',function(){set(false);col.style.setProperty('--lx',0);col.style.setProperty('--ly',0)});
+  });
   addEventListener('resize',fit);addEventListener('hashchange',function(){var n=parseInt(location.hash.slice(1),10);if(n)go(n-1,false)});
   fit();
   var h=parseInt(location.hash.slice(1),10);go(h?h-1:0,false);
