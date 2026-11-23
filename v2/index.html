@@ -1,0 +1,388 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Cases de Sucesso — Impacto 99 para Mondelez (v2)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+@font-face{font-family:'DiDi Sans Pro';font-weight:400;src:url(assets/fonts/DiDiSans-Pro-Regular.otf) format('opentype');font-display:block}
+@font-face{font-family:'DiDi Sans Pro';font-weight:500;src:url(assets/fonts/DiDiSans-Pro-Medium.otf) format('opentype');font-display:block}
+@font-face{font-family:'DiDi Sans Pro';font-weight:700;src:url(assets/fonts/DiDiSans-Pro-Bold.otf) format('opentype');font-display:block}
+@font-face{font-family:'DiDi Sans Pro';font-weight:800;src:url(assets/fonts/DiDiSans-Pro-ExtraBold.otf) format('opentype');font-display:block}
+
+:root{
+  --bg:#f1f1f1;
+  --yellow:#ffdd00;
+  --yellow-deep:#ffc800;
+  --gray-200:#e5e7eb;
+  --n700:#404040;
+  --n800:#262626;
+  --fg:#212121;
+  --didi:'DiDi Sans Pro','Inter',sans-serif;
+  /* Graphik não está embutida: Inter é o substituto mais próximo */
+  --graphik:'Graphik','Inter',sans-serif;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;background:var(--bg);overflow:hidden}
+body{-webkit-font-smoothing:antialiased;text-rendering:geometricPrecision}
+p,ul,li{margin:0;padding:0}
+ul{list-style:none}
+img,svg{display:block}
+
+/* ---------- palco 1920x1080 escalado para a janela ---------- */
+#stage{position:absolute;left:0;top:0;width:1920px;height:1080px;transform-origin:0 0;overflow:hidden;background:var(--bg)}
+.slide{position:absolute;inset:0;background:var(--bg);opacity:0;visibility:hidden;transition:opacity .45s ease,visibility 0s .45s}
+.slide.on{opacity:1;visibility:visible;transition:opacity .45s ease}
+.a{position:absolute}
+.fill{position:absolute;inset:0;max-width:none;width:100%;height:100%}
+
+/* ---------- blocos reaproveitados ---------- */
+.vtb{position:absolute;left:156px;top:100px;width:406px;display:flex;flex-direction:column;gap:24px;color:var(--n700)}
+.vtb .top{display:flex;flex-direction:column;gap:8px;width:100%}
+.vtb .eyebrow{font:700 30px/1 'Inter',sans-serif;letter-spacing:-.6px}
+.vtb .stack{display:flex;flex-direction:column;gap:24px;width:100%}
+.vtb .h{font:500 60px/1 var(--didi);letter-spacing:-1.5px}
+.vtb .sub{font:400 36px/40px var(--didi);letter-spacing:-.9px}
+.vtb .p{font:400 24px/32px var(--didi);letter-spacing:-.6px}
+.vtb .p b{font-weight:700}
+
+.card{position:absolute;top:224px;width:310px;display:flex;align-items:center;gap:16px;padding:8px 16px;border-radius:6px;overflow:hidden;
+  filter:drop-shadow(0 4px 3px rgba(0,0,0,.1)) drop-shadow(0 2px 2px rgba(0,0,0,.1))}
+.card img{width:32px;height:32px;flex:none}
+.card .t{flex:1;min-width:1px;display:flex;flex-direction:column}
+.card .t b{font:700 16px/1 var(--didi);color:var(--n800)}
+.card .t span{padding-top:2px;font:400 14px/1.2 var(--didi);color:var(--n800)}
+
+.tot{position:absolute;top:100px;height:107.95px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7.39px;
+  padding:14.781px 22.171px;border-radius:11.085px;background:var(--gray-200);color:#000;line-height:1}
+.tot.y{background:var(--yellow)}
+.tot .k{width:100%;font:600 16px/1 'Inter',sans-serif;text-transform:uppercase}
+.tot .v{width:100%;font:700 55.427px/1 'Inter',sans-serif;letter-spacing:-3.3256px}
+
+.logo99ads{position:absolute;left:1764px;top:1010px;width:73.039px;height:19px}
+
+.fmtbox{position:absolute;left:156px;width:411px;display:flex;gap:12px;padding:16px;border:1px solid #808080;border-radius:8px;color:var(--fg)}
+.fmtbox img{width:32px;height:32px;flex:none}
+.fmtbox .t{flex:1;min-width:1px;display:flex;flex-direction:column;gap:8px}
+.fmtbox .t b{font:700 20px/1 var(--didi)}
+.fmtbox ul{font:400 20px/1.2 var(--didi);letter-spacing:-.6px;list-style:disc;padding-left:30px}
+
+.vant{position:absolute;width:378px;display:flex;flex-direction:column;gap:32px;color:var(--fg)}
+.vant>b{font:700 28px/1 var(--didi);letter-spacing:-.7px}
+.vant .it{display:flex;gap:12px;height:100px;width:100%;align-items:flex-start}
+.vant .it img{width:48px;height:48px;flex:none}
+.vant .it .t{flex:1;min-width:1px;display:flex;flex-direction:column;gap:8px}
+.vant .it .t b{font:700 20px/1 var(--didi)}
+.vant .it .t p{font:400 20px/1.2 var(--didi);letter-spacing:-.6px}
+
+.popup{position:absolute;top:854px;width:220px;display:flex;flex-direction:column;gap:8px;padding:16px;border:1px solid #737373;border-radius:6px;overflow:hidden}
+.popup .hd{display:flex;gap:16px;align-items:center;width:100%}
+.popup .hd img{width:32px;height:32px;flex:none}
+.popup .hd span{flex:1;min-width:1px;font:600 16px/20px var(--graphik);letter-spacing:-.16px;color:#020617}
+.popup p{font:400 14px/18px var(--graphik);color:var(--n700)}
+
+/* ---------- navegação (fora da arte, aparece ao mover o mouse) ---------- */
+#nav{position:fixed;left:50%;bottom:14px;transform:translateX(-50%);display:flex;align-items:center;gap:14px;padding:7px 14px;border-radius:99px;
+  background:rgba(33,33,33,.82);color:#fff;font:600 13px/1 'Inter',sans-serif;opacity:0;transition:opacity .3s;z-index:10;backdrop-filter:blur(6px)}
+body.show #nav,#nav:hover,#nav:focus-within{opacity:1}
+#nav button{all:unset;cursor:pointer;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-size:16px}
+#nav button:hover{background:var(--yellow);color:#000}
+#nav button:focus-visible{outline:2px solid var(--yellow)}
+#nav .dots{display:flex;gap:7px}
+#nav .dots button{width:9px;height:9px;background:rgba(255,255,255,.4);border-radius:99px}
+#nav .dots button[aria-current="true"]{background:var(--yellow);width:22px}
+#nav .n{min-width:34px;text-align:center;letter-spacing:.04em}
+@media (prefers-reduced-motion:reduce){.slide,.slide.on{transition:none}}
+</style>
+</head>
+<body>
+<div id="stage">
+
+<!-- ============ 1. CAPA ============ -->
+<section class="slide on" data-name="capa" aria-label="Capa">
+  <div class="a" style="left:759.56px;top:296.73px;width:1657.865px;height:1551.651px;display:flex;align-items:center;justify-content:center">
+    <div style="flex:none;width:1373.56px;height:1218.01px;background:var(--yellow-deep);border-radius:181px;transform:rotate(-163.87deg) scaleY(-1)"></div>
+  </div>
+  <div class="a" style="left:762.43px;top:321.12px;width:1644.864px;height:1535.761px;display:flex;align-items:center;justify-content:center">
+    <div style="flex:none;width:1342.194px;height:1168.681px;background:var(--yellow);border:10px solid var(--yellow-deep);border-radius:181px;transform:rotate(-161.4deg) scaleY(-1)"></div>
+  </div>
+  <div class="a" style="left:324.44px;top:795px;color:#000;line-height:1">
+    <p style="font:800 69.625px/1 'Inter',sans-serif;letter-spacing:-1.3925px;white-space:nowrap">Cases de</p>
+    <p style="font:400 65px/1 'Inter',sans-serif;letter-spacing:-1.3px;white-space:nowrap">SUCESSO</p>
+  </div>
+  <img class="a" src="assets/capa-logo99.svg" alt="99" style="left:147px;top:790px;width:145.53px;height:145.53px">
+  <div class="a" style="left:147px;top:143px;color:#000;line-height:1;white-space:nowrap">
+    <p style="font:400 40px/1 'Inter',sans-serif;letter-spacing:-.8px">Setor de Alimentos</p>
+    <p style="font:700 60px/1 'Inter',sans-serif;letter-spacing:-1.2px;margin-top:0">2026</p>
+  </div>
+  <div class="a" style="left:828px;top:49px;width:1079px;height:1079px"><img class="fill" style="object-fit:cover" src="assets/capa-garota.png" alt=""></div>
+</section>
+
+<!-- ============ 2. CASE 1 — KIT KAT ============ -->
+<section class="slide" data-name="case 1" aria-label="Case Kit Kat">
+  <div class="vtb">
+    <div class="top">
+      <p class="eyebrow">KIT KAT</p>
+      <div class="stack">
+        <p class="h">36 Milhões de exibições na tela, no clique e na rua</p>
+        <p class="sub">Envelopamento, Sampling e Car Icon em ação</p>
+      </div>
+    </div>
+    <p class="p">A campanha combinou vídeo, Pop Up e 26 carros adesivados com sampling para estar presente dentro do app e nas ruas.</p>
+  </div>
+  <img class="logo99ads" src="assets/c1-union.svg" alt="99Ads">
+
+  <div class="card" style="left:771px"><img src="assets/c1-ic-pointer.svg" alt=""><div class="t"><b>Acima da média em vídeos</b><span>Médias de 3,4% e 3,0% em 2026</span></div></div>
+  <div class="card" style="left:1112px"><img src="assets/c1-ic-play.svg" alt=""><div class="t"><b>Vídeos assistidos</b><span>Taxa de visualização</span></div></div>
+  <div class="card" style="left:1454px"><img src="assets/c1-ic-eye.svg" alt=""><div class="t"><b>27 Mi de exibições Car Icon</b><span>Dentro do total de 36 Milhões</span></div></div>
+
+  <div class="tot" style="left:771px;width:310px"><p class="k">ctr total</p><p class="v">3,85%</p></div>
+  <div class="tot" style="left:1112px;width:311px"><p class="k">vtr</p><p class="v">46%</p></div>
+  <div class="tot y" style="left:1454px;width:310px"><p class="k">impactos totais</p><p class="v">36 Mi</p></div>
+
+  <!-- carro com máscara -->
+  <div class="a" style="left:660.958px;top:414.612px;width:961.306px;height:639.766px;overflow:hidden;
+       -webkit-mask-image:url(assets/c1-mask.svg);mask-image:url(assets/c1-mask.svg);-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
+       -webkit-mask-size:1228.704px 825.397px;mask-size:1228.704px 825.397px;-webkit-mask-position:-146.958px -160.218px;mask-position:-146.958px -160.218px;mask-mode:alpha">
+    <img class="a" style="height:129%;left:-15.27%;top:-25.03%;width:127.78%;max-width:none" src="assets/c1-carro.png" alt="Carro adesivado Kit Kat">
+  </div>
+
+  <div class="popup" style="left:1264px"><div class="hd"><img src="assets/c1-ic-car-popup.svg" alt=""><span>Envelopamento</span></div><p>Carro adesivado com a marca circulando em pontos estratégicos.</p></div>
+  <img class="a" src="assets/c1-line1.svg" alt="" style="left:1307.67px;top:786.67px;width:132.667px;height:10.667px;transform:rotate(90deg)">
+
+  <div class="a" style="left:1514px;top:389px;width:254px;height:254px;border-radius:125.337px;overflow:hidden">
+    <img class="a" style="height:170.57%;left:.06%;top:-43.53%;width:99.94%;max-width:none" src="assets/c1-interno.png" alt="Propaganda dentro do carro">
+    <div class="a" style="inset:0;border:5.791px solid #fff;border-radius:125.337px"></div>
+  </div>
+
+  <div class="popup" style="left:1531px"><div class="hd"><img src="assets/c1-ic-view.svg" alt=""><span>Sampling</span></div><p>Marca aplicada dentro do carro em contato direto com o passageiro.</p></div>
+  <img class="a" src="assets/c1-line2.svg" alt="" style="left:1527.17px;top:739.17px;width:227.667px;height:10.668px;transform:rotate(90deg)">
+
+  <div class="a" style="left:661px;top:415px;width:946px;height:284px;overflow:hidden">
+    <img class="a" style="height:290.62%;left:-15.52%;top:-56.4%;width:129.87%;max-width:none" src="assets/c1-carro-topo.png" alt="">
+  </div>
+
+  <div class="a" style="left:771px;top:330px;width:378px;display:flex;gap:12px;align-items:flex-start">
+    <img src="assets/c1-ic-car.svg" alt="" style="width:32px;height:32px;flex:none">
+    <div style="flex:1;min-width:1px;display:flex;flex-direction:column;gap:8px;color:var(--fg);font-size:20px">
+      <p style="font:700 20px/1.6 var(--didi)">Métricas do envelopamento</p>
+      <div style="font:400 20px/1.2 var(--didi);letter-spacing:-.6px"><p>26 Carros adesivados</p><p>64.237 Km Rodados</p><p>2,31 Milhões de exibições</p></div>
+    </div>
+  </div>
+
+  <div class="fmtbox" style="top:774px">
+    <img src="assets/c1-ic-smartphone.svg" alt="">
+    <div class="t"><b>Formatos utilizados na campanha</b>
+      <ul><li>Sampling</li><li>Envelopamento</li><li>Waiting For (Vídeo)</li><li>In Trip (Vídeo)</li><li>Pop Up</li><li>Car Icon</li></ul></div>
+  </div>
+</section>
+
+<!-- ============ 3. RESUMO ============ -->
+<section class="slide" data-name="resumo" aria-label="Resumo">
+  <div class="a" style="left:771px;top:370px;width:331px;height:610px;overflow:hidden">
+    <img class="a" style="height:137.82%;left:-2.54%;top:-26.19%;width:124.82%;max-width:none" src="assets/r-img1.png" alt="Pop Up Kit Kat">
+    <div class="a" style="inset:0;background:linear-gradient(to top,rgba(0,0,0,.8) 16.721%,rgba(0,0,0,0) 69.016%)"></div>
+  </div>
+  <div class="a" style="left:1102px;top:370px;width:331px;height:610px;overflow:hidden">
+    <img class="a" style="height:114.45%;left:-1.83%;top:-14.51%;width:103.66%;max-width:none" src="assets/r-img2.png" alt="Balde KFC">
+    <div class="a" style="inset:0;background:linear-gradient(to top,rgba(0,0,0,.9) 16.557%,rgba(0,0,0,0) 61.475%)"></div>
+  </div>
+  <div class="a" style="left:1433px;top:370px;width:331px;height:610px;overflow:hidden">
+    <img class="fill" style="object-fit:cover" src="assets/r-img3.png" alt="Sorvetes">
+    <div class="a" style="inset:0;background:linear-gradient(to top,rgba(0,0,0,.9) 16.885%,rgba(0,0,0,0) 61.311%)"></div>
+  </div>
+
+  <div class="vtb" style="top:103px;width:410px">
+    <div class="top" style="line-height:1">
+      <p class="eyebrow">RESUMO</p>
+      <p class="h">Atenção que vira clique e clique que vira pedido</p>
+    </div>
+    <p class="p">A 99 coloca sua marca diante de quem está em movimento: o vídeo prende a atenção, o Pop Up provoca o clique e os carros adesivados levam a marca pela cidade.</p>
+  </div>
+  <img class="logo99ads" src="assets/r-union.svg" alt="99Ads">
+
+  <p class="a" style="left:771px;top:103px;width:993px;font:600 28px/34px var(--graphik);letter-spacing:-.84px;color:var(--fg)">CTR médio por formato</p>
+
+  <div class="card" style="left:771px;top:297px"><img src="assets/r-ic-route.svg" alt=""><div class="t"><b>Vídeo durante a viagem</b><span>Prende a atenção durante a corrida</span></div></div>
+  <div class="card" style="left:1112px;top:297px"><img src="assets/r-ic-play.svg" alt=""><div class="t"><b>Vídeo na espera</b><span>Atenção antes da corrida</span></div></div>
+  <div class="card" style="left:1454px;top:297px"><img src="assets/r-ic-pointer.svg" alt=""><div class="t"><b>Anúncio destaque</b><span>O formato que mais gera interação</span></div></div>
+
+  <div class="tot" style="left:771px;top:173px;width:310px"><p class="k">In trip (vídeo)</p><p class="v">3,0%</p></div>
+  <div class="tot" style="left:1112px;top:173px;width:311px"><p class="k" style="text-transform:none">WAITING FOR (VÍDEO)</p><p class="v">3,4%</p></div>
+  <div class="tot y" style="left:1454px;top:173px;width:310px"><p class="k" style="text-transform:none">POP UP</p><p class="v">8,1%</p></div>
+
+  <div class="a" style="left:798px;top:862px;width:278px;display:flex;gap:12px;color:#fff">
+    <img src="assets/r-ic-radar.svg" alt="" style="width:32px;height:32px;flex:none">
+    <div style="flex:1;min-width:1px;display:flex;flex-direction:column;gap:8px"><p style="font:700 20px/1 var(--didi)">Case KitKat</p><p style="font:400 16px/20px var(--graphik);letter-spacing:-.16px">36 milhões de exibições entre carros adesivados, sampling e car icon.</p></div>
+  </div>
+  <div class="a" style="left:1129px;top:862px;width:278px;display:flex;gap:12px;color:#fff">
+    <img src="assets/r-ic-radar.svg" alt="" style="width:32px;height:32px;flex:none">
+    <div style="flex:1;min-width:1px;display:flex;flex-direction:column;gap:8px"><p style="font:700 20px/1 var(--didi)">Case KFC</p><p style="font:400 16px/20px var(--graphik);letter-spacing:-.16px">Aumento considerável na conversão onde cada R$ 1 virou R$ 5 em 14 dias.</p></div>
+  </div>
+  <div class="a" style="left:1460px;top:862px;width:278px;display:flex;gap:12px;color:#fff">
+    <img src="assets/r-ic-radar.svg" alt="" style="width:32px;height:32px;flex:none">
+    <div style="flex:1;min-width:1px;display:flex;flex-direction:column;gap:8px"><p style="font:700 20px/1 var(--didi)">Case Kibon</p><p style="font:400 16px/20px var(--graphik);letter-spacing:-.16px">Aumento de 338% no número de pedidos B2B no período da campanha.</p></div>
+  </div>
+
+  <img class="a" src="assets/r-line1.svg" alt="" style="left:102px;top:922px;width:112px;height:4px;transform:rotate(90deg)">
+  <div class="a" style="left:188px;top:868px;width:560px;color:rgba(33,33,33,.7);font:400 24px/28px var(--graphik);letter-spacing:-.72px">
+    <p style="white-space:pre-wrap">Três cases, três resultados: </p>
+    <ul style="list-style:disc;padding-left:36px"><li>Alcance em escala, </li><li>Retorno em vendas,</li><li>Pedidos no app.</li></ul>
+  </div>
+</section>
+
+<!-- ============ 4. CASE 2 — KFC ============ -->
+<section class="slide" data-name="case 2" aria-label="Case KFC">
+  <div class="vtb">
+    <div class="top">
+      <p class="eyebrow">KFC</p>
+      <div class="stack">
+        <p class="h">Cada R$ 1 investido voltou como R$ 5 em 14 dias.</p>
+        <p class="sub">Desafio aceito e concluído com excelência!</p>
+      </div>
+    </div>
+    <div class="p"><p><b>Desafio:</b> aumentar os pedidos da Terça Balde no 99Food.</p><p><b>Solução:</b> vídeo na viagem que levava o passageiro direto à página da KFC no app.</p></div>
+  </div>
+  <img class="logo99ads" src="assets/c2-union.svg" alt="99Ads">
+
+  <div class="card" style="left:771px"><img src="assets/c2-ic-pointer.svg" alt=""><div class="t"><b>CTR em vídeo na viagem</b><span>Médias de 3,4% e 3,0% em 2026</span></div></div>
+  <div class="card" style="left:1112px"><img src="assets/c2-ic-play.svg" alt=""><div class="t"><b>Vídeos assistidos</b><span>Taxa de visualização</span></div></div>
+  <div class="card" style="left:1454px"><img src="assets/c2-ic-eye.svg" alt=""><div class="t"><b>Retorno em 14 dias</b><span>CPC R$ 2,98 | Ticket R$ 71,51</span></div></div>
+
+  <div class="tot" style="left:771px;width:310px"><p class="k">ctr</p><p class="v">2,6%</p></div>
+  <div class="tot" style="left:1112px;width:311px"><p class="k">vtr</p><p class="v">64%</p></div>
+  <div class="tot y" style="left:1454px;width:310px"><p class="k">roas 14d</p><p class="v">5x</p></div>
+
+  <div class="fmtbox" style="top:870px">
+    <img src="assets/c2-ic-smartphone.svg" alt="">
+    <div class="t"><b>Formatos utilizados na campanha</b>
+      <ul><li>In Trip (Vídeo)</li><li>Landing page KFC no 99Food</li></ul></div>
+  </div>
+
+  <!-- celular na mão -->
+  <div class="a" style="left:526.53px;top:257.68px;width:927.151px;height:893.372px;display:flex;align-items:center;justify-content:center">
+    <div style="flex:none;width:784.014px;height:739.342px;transform:rotate(12.68deg);position:relative;overflow:hidden">
+      <img class="a" style="height:99.98%;left:-22.91%;top:0;width:125.71%;max-width:none" src="assets/c2-mao.png" alt="Celular com a campanha do KFC">
+    </div>
+  </div>
+  <div class="a" style="left:746.13px;top:748.17px;width:262.859px;height:175.091px;display:flex;align-items:center;justify-content:center">
+    <div style="flex:none;width:241.266px;height:125.197px;transform:rotate(12.68deg);position:relative;overflow:hidden;border-radius:5.703px">
+      <div class="a" style="left:0;top:0;width:263.747px;height:263.747px;border-radius:5.703px;overflow:hidden">
+        <img class="a" style="left:-.42%;top:-49.15%;width:100%;height:100%;max-width:none" src="assets/c2-tela1.png" alt="">
+      </div>
+      <img class="a" style="left:84.32%;top:-15.62%;right:0;bottom:0;width:15.68%;height:115.62%;mix-blend-mode:color-burn;max-width:none" src="assets/c2-union-tela.svg" alt="">
+    </div>
+  </div>
+  <div class="a" style="left:796.59px;top:730.58px;width:193.393px;height:206.611px;display:flex;align-items:center;justify-content:center">
+    <div style="flex:none;width:158.615px;height:176.096px;transform:rotate(12.68deg);position:relative;overflow:hidden">
+      <img class="a" style="height:139.61%;left:-46.39%;top:-18.07%;width:155.42%;max-width:none" src="assets/c2-tela2.png" alt="">
+    </div>
+  </div>
+
+  <div class="vant" style="left:1354px;top:442px">
+    <b>O que a campanha entregou:</b>
+    <div class="it"><img src="assets/c2-ic-pointer-lg.svg" alt=""><div class="t"><b>Cliques até o pedido</b><p>Vídeo na viagem levava à landing page da KFC no 99Food, com CTR de 2,6% e CPC de R$ 2,98.</p></div></div>
+    <div class="it"><img src="assets/c2-ic-video.svg" alt=""><div class="t"><b>Vídeo que prende atenção</b><p>VTR de 64%: a maioria dos passageiros assistiu ao vídeo durante a viagem.</p></div></div>
+    <div class="it"><img src="assets/c2-ic-dollar.svg" alt=""><div class="t"><b>Retorno em 14 dias</b><p>ROAS de 5x e ticket médio de R$ 71,51 nos pedidos da Terça Balde.</p></div></div>
+  </div>
+</section>
+
+<!-- ============ 5. CASE 3 — SORVETES ============ -->
+<section class="slide" data-name="case 3" aria-label="Case Sorvetes">
+  <div class="a" style="left:1112px;top:294px;width:808px;height:786px;overflow:hidden">
+    <img class="a" style="height:100%;left:-19.39%;top:0;width:121.66%;max-width:none" src="assets/c3-crianca.png" alt="Criança com sorvete">
+  </div>
+  <div class="vtb">
+    <div class="top">
+      <p class="eyebrow">SORVETES</p>
+      <div class="stack">
+        <p class="h">Pedidos no app B2B cresceram 338%.</p>
+        <p class="sub">Mais acessos ao cardápio, mais pedidos.</p>
+      </div>
+    </div>
+    <div class="p"><p><b>Desafio: </b>aumentar os pedidos no app para B2B<b>.</b></p><p><b>Solução: </b>Pop Up no app levando ao cardápio.</p></div>
+  </div>
+  <img class="logo99ads" src="assets/c3-union.svg" alt="99Ads">
+
+  <div class="card" style="left:771px"><img src="assets/c3-ic-pointer.svg" alt=""><div class="t"><b>Mais acessos ao cardápio</b><span>Aumento de 122%</span></div></div>
+  <div class="card" style="left:1112px"><img src="assets/c3-ic-play.svg" alt=""><div class="t"><b>Mais pedidos no app</b><span>Aumento de 338%</span></div></div>
+  <div class="card" style="left:1454px"><img src="assets/c3-ic-eye.svg" alt=""><div class="t"><b>CTR do Pop Up</b><span>Média de 8,1% em 2026</span></div></div>
+
+  <div class="tot" style="left:771px;width:310px"><p class="k">acessos ao cardápio</p><p class="v">+122%</p></div>
+  <div class="tot" style="left:1112px;width:311px"><p class="k">pedidos</p><p class="v">+338%</p></div>
+  <div class="tot y" style="left:1454px;width:310px"><p class="k">ctr pop up</p><p class="v">2,4%</p></div>
+
+  <div class="fmtbox" style="top:894px">
+    <img src="assets/c3-ic-smartphone.svg" alt="">
+    <div class="t"><b>Formatos utilizados na campanha</b><ul><li>Pop Up</li></ul></div>
+  </div>
+
+  <div class="vant" style="left:793px;top:432px">
+    <b>O que a campanha entregou:</b>
+    <div class="it"><img src="assets/c3-ic-view-lg.svg" alt=""><div class="t"><b>Mais acessos ao cardápio</b><p>Aumento de 122% nos acessos ao cardápio dentro do app.</p></div></div>
+    <div class="it"><img src="assets/c3-ic-smartphone-lg.svg" alt=""><div class="t"><b>Pop Up que gera interação</b><p>CTR de 2,4% no Pop Up, formato de interação dentro do app.</p></div></div>
+    <div class="it"><img src="assets/c3-ic-dollar.svg" alt=""><div class="t"><b>Mais pedidos B2B</b><p>Aumento de 338% nos pedidos pelo app para B2B.</p></div></div>
+  </div>
+</section>
+
+</div>
+
+<nav id="nav" aria-label="Navegação dos slides">
+  <button id="prev" aria-label="Slide anterior">‹</button>
+  <div class="dots" id="dots"></div>
+  <span class="n" id="count"></span>
+  <button id="next" aria-label="Próximo slide">›</button>
+</nav>
+
+<script>
+(function(){
+  var stage=document.getElementById('stage'),
+      slides=[].slice.call(stage.querySelectorAll('.slide')),
+      dots=document.getElementById('dots'),count=document.getElementById('count'),
+      i=0,hideT;
+
+  function fit(){
+    var s=Math.min(innerWidth/1920,innerHeight/1080);
+    stage.style.transform='translate('+((innerWidth-1920*s)/2)+'px,'+((innerHeight-1080*s)/2)+'px) scale('+s+')';
+  }
+  function go(n,push){
+    i=Math.max(0,Math.min(slides.length-1,n));
+    slides.forEach(function(el,k){el.classList.toggle('on',k===i)});
+    [].forEach.call(dots.children,function(b,k){b.setAttribute('aria-current',k===i)});
+    count.textContent=(i+1)+' / '+slides.length;
+    if(push!==false){try{history.replaceState(null,'','#'+(i+1))}catch(e){}}
+  }
+  slides.forEach(function(el,k){
+    var b=document.createElement('button');
+    b.setAttribute('aria-label','Ir para '+el.getAttribute('aria-label'));
+    b.onclick=function(){go(k)};dots.appendChild(b);
+  });
+  document.getElementById('prev').onclick=function(){go(i-1)};
+  document.getElementById('next').onclick=function(){go(i+1)};
+  addEventListener('keydown',function(e){
+    if(e.key==='ArrowRight'||e.key==='PageDown'||e.key===' '){e.preventDefault();go(i+1)}
+    else if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();go(i-1)}
+    else if(e.key==='Home')go(0);else if(e.key==='End')go(slides.length-1);
+    else if(e.key==='f'||e.key==='F'){document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen()}
+  });
+  var tx=null;
+  addEventListener('touchstart',function(e){tx=e.touches[0].clientX},{passive:true});
+  addEventListener('touchend',function(e){
+    if(tx===null)return;var d=e.changedTouches[0].clientX-tx;tx=null;
+    if(Math.abs(d)>50)go(i+(d<0?1:-1));
+  });
+  var quiet=/[?&]nonav\b/.test(location.search);
+  if(quiet)document.getElementById('nav').style.display='none';
+  function reveal(){if(quiet)return;document.body.classList.add('show');clearTimeout(hideT);hideT=setTimeout(function(){document.body.classList.remove('show')},2200)}
+  addEventListener('mousemove',reveal);addEventListener('touchstart',reveal,{passive:true});
+  addEventListener('resize',fit);addEventListener('hashchange',function(){var n=parseInt(location.hash.slice(1),10);if(n)go(n-1,false)});
+  fit();
+  var h=parseInt(location.hash.slice(1),10);go(h?h-1:0,false);
+  reveal();
+})();
+</script>
+</body>
+</html>
